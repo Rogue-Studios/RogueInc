@@ -13,6 +13,8 @@ public class Main extends Application {
         primaryStage.setScene(new Scene(root, 300, 275));
         primaryStage.show();
     }
+    //comment
+    // this is a test comment
 
 
     public static void main(String[] args) {
