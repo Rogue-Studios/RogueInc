@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.*?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.layout.*?>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="854.0" prefWidth="480.0" xmlns="http://javafx.com/javafx/8.0.131" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ResourcesController">
+   <center>
+      <JFXTabPane side="BOTTOM" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+         <tabs>
+            <Tab text="Resources">
+               <content>
+                  <JFXListView />
+               </content>
+            </Tab>
+            <Tab text="Production">
+               <content>
+                  <JFXListView />
+               </content>
+            </Tab>
+            <Tab text="Research">
+               <content>
+                  <JFXListView />
+               </content>
+            </Tab>
+         </tabs>
+      </JFXTabPane>
+   </center>
+   <top>
+      <HBox alignment="CENTER" BorderPane.alignment="CENTER">
+         <children>
+            <JFXButton maxWidth="-Infinity" minWidth="-Infinity" prefWidth="90.0" text="Leaderboard" />
+            <Pane HBox.hgrow="ALWAYS" />
+            <JFXButton text="\$100" />
+            <Pane layoutX="93.0" layoutY="10.0" HBox.hgrow="ALWAYS" />
+            <JFXButton maxWidth="-Infinity" minWidth="-Infinity" prefWidth="90.0" text="Settings" />
+         </children>
+      </HBox>
+   </top>
+</BorderPane>
