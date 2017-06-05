@@ -9,7 +9,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" exported="" name="controlsfx-8.40.12" level="project" />
-    <orderEntry type="library" exported="" name="jfoenix" level="project" />
+    <orderEntry type="library" name="controlsfx-8.40.12" level="project" />
+    <orderEntry type="library" name="jfoenix" level="project" />
   </component>
 </module>
