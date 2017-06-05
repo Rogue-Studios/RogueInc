@@ -11,9 +11,9 @@ import java.io.IOException;
 
 public class MainController extends Stage {
 
-    private final StackPane pane = new StackPane();
-    private GameViewController gameViewController;
-    private double version;
+    final StackPane pane = new StackPane();
+    GameViewController gameViewController;
+    double version;
 
     public MainController(double version) {
         this.version = version;

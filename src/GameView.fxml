@@ -30,7 +30,7 @@
          <children>
             <JFXButton fx:id="leaderboardButton" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="90.0" text="Leaderboard" />
             <Pane HBox.hgrow="ALWAYS" />
-            <JFXButton fx:id="moneyButton" text="\$100" />
+            <JFXButton fx:id="balanceButton" text="\$100" />
             <Pane layoutX="93.0" layoutY="10.0" HBox.hgrow="ALWAYS" />
             <JFXButton fx:id="settingsButton" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="90.0" text="Settings" />
          </children>
