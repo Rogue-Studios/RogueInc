@@ -6,11 +6,11 @@ obj
 lint.xml
 
 # IntelliJ IDEA
-.idea
-*.iml
-*.ipr
-*.iws
-classes
+# .idea
+# *.iml
+# *.ipr
+# *.iws
+# classes
 gen-external-apklibs
 
 # Eclipse
@@ -43,5 +43,3 @@ dist
 tmp
 
 .ini
-build
-._*
