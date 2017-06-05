@@ -1,37 +1,43 @@
+import javafx.beans.property.*;
+
 public class Resource {
 
-    private String name;
+    private StringProperty name;
     private boolean unlocked;
     private double producerCost;
     private double storerCost;
     private double marketValue;
-    private int currentStorage;
-    private int maxStorage;
+    private IntegerProperty currentStorage;
+    private IntegerProperty maxStorage;
     private double productionTime;
-    private double timeSinceProduction;
+    private DoubleProperty timeSinceProduction;
     private int producerCount;
     private int storerCount;
     private double speedModifier;
 
     public Resource(String name, double producerCost, double storerCost, double marketValue, double productionTime) {
 
-        this.name = name;
+        this.name = new SimpleStringProperty();
+        this.name.setValue(name);
+
         this.unlocked = false;
         this.producerCost = producerCost;
         this.storerCost = storerCost;
         this.marketValue = marketValue;
-        this.currentStorage = 0;
-        this.maxStorage = 0;
+
+        this.currentStorage = new SimpleIntegerProperty();
+        this.currentStorage.setValue(0);
+        this.maxStorage = new SimpleIntegerProperty();
+        this.maxStorage.setValue(0);
+
         this.productionTime = productionTime;
-        this.timeSinceProduction = 0;
+        this.timeSinceProduction = new SimpleDoubleProperty();
+        this.timeSinceProduction.setValue(0);
+
         this.producerCount = 0;
         this.storerCount = 0;
         this.speedModifier = 1;
 
-    }
-
-    public String getName() {
-        return name;
     }
 
     public boolean isUnlocked() {
@@ -50,21 +56,6 @@ public class Resource {
         return marketValue;
     }
 
-    public int getCurrentStorage() {
-        return currentStorage;
-    }
-
-    public int getMaxStorage() {
-        return maxStorage;
-    }
-
-    public double getProductionTime() {
-        return productionTime;
-    }
-
-    public double getTimeSinceProduction() {
-        return timeSinceProduction;
-    }
 
     public int getProducerCount() {
         return producerCount;
@@ -76,10 +67,6 @@ public class Resource {
 
     public double getSpeedModifier() {
         return speedModifier;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public void setUnlocked(boolean unlocked) {
@@ -98,20 +85,9 @@ public class Resource {
         this.marketValue = marketValue;
     }
 
-    public void setCurrentStorage(int currentStorage) {
-        this.currentStorage = currentStorage;
-    }
-
-    public void setMaxStorage(int maxStorage) {
-        this.maxStorage = maxStorage;
-    }
 
     public void setProductionTime(double productionTime) {
         this.productionTime = productionTime;
-    }
-
-    public void setTimeSinceProduction(double timeSinceProduction) {
-        this.timeSinceProduction = timeSinceProduction;
     }
 
     public void setProducerCount(int producerCount) {
@@ -124,5 +100,53 @@ public class Resource {
 
     public void setSpeedModifier(double speedModifier) {
         this.speedModifier = speedModifier;
+    }
+
+    public StringProperty nameProperty() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name.set(name);
+    }
+
+    public int getCurrentStorage() {
+        return currentStorage.get();
+    }
+
+    public IntegerProperty currentStorageProperty() {
+        return currentStorage;
+    }
+
+    public void setCurrentStorage(int currentStorage) {
+        this.currentStorage.set(currentStorage);
+    }
+
+    public int getMaxStorage() {
+        return maxStorage.get();
+    }
+
+    public IntegerProperty maxStorageProperty() {
+        return maxStorage;
+    }
+
+    public void setMaxStorage(int maxStorage) {
+        this.maxStorage.set(maxStorage);
+    }
+
+    public double getProductionTime() {
+        return productionTime;
+    }
+
+    public double getTimeSinceProduction() {
+        return timeSinceProduction.get();
+    }
+
+    public DoubleProperty timeSinceProductionProperty() {
+        return timeSinceProduction;
+    }
+
+    public void setTimeSinceProduction(double timeSinceProduction) {
+        this.timeSinceProduction.set(timeSinceProduction);
     }
 }
