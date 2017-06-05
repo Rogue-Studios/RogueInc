@@ -12,6 +12,7 @@ public class Main extends Application {
         primaryStage.setTitle("Rogue Inc.");
         primaryStage.setScene(new Scene(root, 480, 854));
         primaryStage.show();
+        // successfully compiles
     }
 
 
