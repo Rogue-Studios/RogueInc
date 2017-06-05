@@ -5,6 +5,17 @@ import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.geometry.VPos;
+import javafx.scene.control.Button;
+import javafx.scene.control.ContentDisplay;
+import javafx.scene.control.ListCell;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -48,6 +59,14 @@ public class GameViewController implements Initializable{
 
         importData();
 
+        //setCellFactories();
+    }
+
+    private void setCellFactories() {
+        resourcesListView.setCellFactory(v -> new ResourceCell());
+
+        productionListView.setCellFactory(null);
+        //researchListView.setCellFactory();
     }
 
     private void importData() {
@@ -102,6 +121,66 @@ public class GameViewController implements Initializable{
     }
 
     private void writeSaveData() {
+
+    }
+
+    //////////////////////////////
+    //       CUSTOM CELLS       //
+    //////////////////////////////
+
+    static class ResourceCell extends ListCell<Resource> {
+
+        final VBox vbox = new VBox();
+        final HBox hbox1 = new HBox();
+        final HBox hbox2 = new HBox();
+
+        final Text nameText = new Text("NAME");
+        final Text productionAmountText = new Text("AMOUNT");
+
+        final Text timerProgress = new Text("00:05");
+        final Text storageProgress = new Text("10 / 100");
+
+        final JFXButton sellAllButton= new JFXButton("SELL ALL");
+        final JFXButton buyProducer= new JFXButton("BUY PRODUCER");
+        final JFXButton buyStorer= new JFXButton("BUY STORAGE");
+        final JFXButton sellOneButton = new JFXButton("SELL ONE");
+
+        //final Separator separator = new Separator();
+        //final Pane spacer = new Pane();
+
+
+        public ResourceCell() {
+            super();
+            setProperties();
+        }
+
+        private void setProperties() {
+
+            setupText(nameText, 14.0, 3.0, 0.0, 3.0, 0.0, TextAlignment.LEFT);
+            setupText(productionAmountText, 14.0, 3.0, 0.0, 3.0, 0.0, TextAlignment.LEFT);
+            setupText(timerProgress, 14.0, 3.0, 0.0, 3.0, 0.0, TextAlignment.LEFT);
+            setupText(storageProgress, 14.0, 3.0, 0.0, 3.0, 0.0, TextAlignment.LEFT);
+
+            hbox1.getChildren().addAll(nameText, productionAmountText, timerProgress);
+            hbox2.getChildren().addAll(sellOneButton, sellAllButton, buyProducer, buyStorer, storageProgress);
+            vbox.getChildren().addAll(hbox1, hbox2);
+        }
+
+        private void setupText(Text text, double fontSize, double top, double right, double bottom, double left, TextAlignment alignment) {
+            text.setTextAlignment(alignment);
+            text.setTextOrigin(VPos.CENTER);
+            text.setFont(new Font(fontSize));
+            HBox.setMargin(text, new Insets(top, right, bottom, left));
+        }
+
+        private void setupButton(Button button) {
+            button.setAlignment(Pos.CENTER);
+            button.setContentDisplay(ContentDisplay.CENTER);
+            button.setPrefSize(25.0, 25.0);
+            button.setTextAlignment(TextAlignment.CENTER);
+            button.setFocusTraversable(false);
+            HBox.setMargin(button, new Insets(5.0));
+        }
 
     }
 }
