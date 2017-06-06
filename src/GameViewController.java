@@ -139,7 +139,7 @@ public class GameViewController implements Initializable{
         final HBox hbox2 = new HBox();
 
         final Text nameText = new Text("NAME");
-        final Text productionAmountText = new Text("AMOUNT?");
+        final Text productionAmountText = new Text("0");
         final Pane paneTop = new Pane();
         final StackPane timerProgressStackpane = new StackPane();
         final Text timerProgressText = new Text("Nah");
@@ -170,6 +170,8 @@ public class GameViewController implements Initializable{
                 setGraphic(vbox);
 
                 nameText.textProperty().bind(resource.nameProperty());
+
+                productionAmountText.textProperty().bind(resource.producerCountProperty().asString());
 
                 timerProgressText.textProperty().bind(resource.timeSinceProductionProperty().asString());
 

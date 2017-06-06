@@ -11,7 +11,7 @@ public class Resource {
     private IntegerProperty maxStorage;
     private double productionTime;
     private DoubleProperty timeSinceProduction;
-    private int producerCount;
+    private IntegerProperty producerCount;
     private int storerCount;
     private double speedModifier;
 
@@ -33,11 +33,43 @@ public class Resource {
         this.productionTime = productionTime;
         this.timeSinceProduction = new SimpleDoubleProperty();
         this.timeSinceProduction.setValue(0);
+        this.producerCount = new SimpleIntegerProperty();
 
-        this.producerCount = 0;
         this.storerCount = 0;
         this.speedModifier = 1;
 
+    }
+
+    public double updateResourceData(double timePassed, double overFlowModifier) {
+
+
+        // this is overkill for normal running but is necessary for relaunching the program and calculating the difference in time
+        double overFlowMoney = 0;
+        timeSinceProduction.set(timeSinceProduction.get() + timePassed);
+
+        if (timeSinceProduction.get() > productionTime) {
+            int numberOfProductions;
+
+            // calculates how many times a resource has been produced
+            numberOfProductions = (int) (Math.floor(timeSinceProduction.get() / productionTime));
+
+            // checks to see if storage will overflow
+            if (currentStorage.get() + numberOfProductions > maxStorage.get()) {
+
+                // calculates money from storage overflow
+                overFlowMoney = marketValue * overFlowModifier * ((currentStorage.get() + numberOfProductions) - maxStorage.get());
+
+                // sets currentStorage to full
+                currentStorage.set(maxStorage.get());
+            } else {
+                // adds all new resources to storage if it will not overflow
+                currentStorage.set(currentStorage.get() + numberOfProductions);
+            }
+            // sets timeSinceProduction to correct amount
+            timeSinceProduction.set(timeSinceProduction.get() % productionTime);
+
+        }
+        return overFlowMoney;
     }
 
     public boolean isUnlocked() {
@@ -54,11 +86,6 @@ public class Resource {
 
     public double getMarketValue() {
         return marketValue;
-    }
-
-
-    public int getProducerCount() {
-        return producerCount;
     }
 
     public int getStorerCount() {
@@ -88,10 +115,6 @@ public class Resource {
 
     public void setProductionTime(double productionTime) {
         this.productionTime = productionTime;
-    }
-
-    public void setProducerCount(int producerCount) {
-        this.producerCount = producerCount;
     }
 
     public void setStorerCount(int storerCount) {
@@ -149,4 +172,13 @@ public class Resource {
     public void setTimeSinceProduction(double timeSinceProduction) {
         this.timeSinceProduction.set(timeSinceProduction);
     }
+
+    public IntegerProperty producerCountProperty() {
+        return producerCount;
+    }
+
+    public void setProducerCountProperty(double producerCount) {
+        this.setProducerCountProperty(producerCount);
+    }
+
 }
