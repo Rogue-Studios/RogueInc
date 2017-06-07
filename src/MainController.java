@@ -26,12 +26,23 @@ public class MainController extends Stage {
 
     public void loadFXMLLoaders() {
         FXMLLoader gameViewFXMLLoader = new FXMLLoader((getClass().getResource("GameView.fxml")));
+
         try {
             pane.getChildren().add(gameViewFXMLLoader.load());
         } catch (IOException e) {
             Main.outputError(e);
         }
+
         gameViewController = gameViewFXMLLoader.getController();
+
+    }
+
+    private void loadSaveData() {
+
+    }
+
+    private void writeSaveData() {
+
     }
 
     public void loadScene() {

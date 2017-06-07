@@ -7,10 +7,13 @@ public class Resource {
     private double producerCost;
     private double storerCost;
     private double marketValue;
+
     private IntegerProperty currentStorage;
     private IntegerProperty maxStorage;
+
     private double productionTime;
     private DoubleProperty timeSinceProduction;
+
     private IntegerProperty producerCount;
     private int storerCount;
     private double speedModifier;
