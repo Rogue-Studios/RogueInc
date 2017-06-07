@@ -56,27 +56,12 @@ public class GameViewController implements Initializable{
     public void tick(double passedTime) {
 
         double moneyChange;
-        moneyChange = resourcesList.get(0).updateResourceData(passedTime, 1);
-        if(moneyChange > 0) {
-            player.addMoney(moneyChange);
+        for(int i = 0; i < resourcesList.size(); i++) {
+            moneyChange = resourcesList.get(i).updateResourceData(passedTime, 1);
+            if (moneyChange > 0) {
+                player.addMoney(moneyChange);
+            }
         }
-        moneyChange = resourcesList.get(1).updateResourceData(passedTime, 1);
-        if(moneyChange > 0) {
-            player.addMoney(moneyChange);
-        }
-        moneyChange = resourcesList.get(2).updateResourceData(passedTime, 1);
-        if(moneyChange > 0) {
-            player.addMoney(moneyChange);
-        }
-        moneyChange = resourcesList.get(3).updateResourceData(passedTime, 1);
-        if(moneyChange > 0) {
-            player.addMoney(moneyChange);
-        }
-        moneyChange = resourcesList.get(4).updateResourceData(passedTime, 1);
-        if(moneyChange > 0) {
-            player.addMoney(moneyChange);
-        }
-
     }
 
     @Override
@@ -159,7 +144,7 @@ public class GameViewController implements Initializable{
         );
 
         resourcesList.addAll(lemons, sugar, apples, bananas, moisture);
-
+        //resourcesList.addAll(lemons);
         ////
         // Import factories:
 
@@ -274,8 +259,8 @@ public class GameViewController implements Initializable{
                 });
 
                 // UPDATE STORAGE PROGRESSBAR AND TEXT WHEN VALUES CHANGE
-                resource.currentStorageProperty().addListener(v -> updateStorageGUI());
-                resource.maxStorageProperty().addListener(v -> updateStorageGUI());
+                resource.currentStorageProperty().addListener(v -> updateStorageGUI(resource));
+                resource.maxStorageProperty().addListener(v -> updateStorageGUI(resource));
 
                 // Update values so listeners are called immediately
                 resource.currentStorageProperty().setValue(resource.getCurrentStorage() + 1);
@@ -290,7 +275,7 @@ public class GameViewController implements Initializable{
 
         }
 
-        private void updateStorageGUI() {
+        private void updateStorageGUI(Resource resource) {
             //System.out.println("storageText: " + storageText.getText());
             //System.out.println(resource.currentStorageProperty().getValue());
             //System.out.println(resource.maxStorageProperty().getValue());

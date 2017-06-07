@@ -10,7 +10,7 @@ public class User {
 
     public User(double balance) {
         this.balance = new SimpleDoubleProperty();
-        this.balance.setValue(100);
+        this.balance.setValue(balance);
         lifetimeMoney = balance;
         lifetimeSpending = 0;
         totalResourcesProduced = 0;
