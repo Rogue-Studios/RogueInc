@@ -19,7 +19,6 @@ public class User {
     public void addMoney(double money) {
         balance.set(balance.get() + money);
         lifetimeMoney += money;
-        System.out.println(balance.get());
     }
 
     public void subtractMoney(double money) {

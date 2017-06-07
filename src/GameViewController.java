@@ -46,8 +46,7 @@ public class GameViewController implements Initializable{
 
     public void start() {
 
-        final double tickTime = 50;
-
+        final double tickTime = 0.1;
         Timeline timer = new Timeline((new KeyFrame(Duration.millis(tickTime), event -> tick((tickTime / 1000)))));
         timer.setCycleCount(Animation.INDEFINITE);
         timer.play();
@@ -59,12 +58,22 @@ public class GameViewController implements Initializable{
         double moneyChange;
         moneyChange = resourcesList.get(0).updateResourceData(passedTime, 1);
         if(moneyChange > 0) {
-            System.out.println(moneyChange);
             player.addMoney(moneyChange);
         }
         moneyChange = resourcesList.get(1).updateResourceData(passedTime, 1);
         if(moneyChange > 0) {
-            System.out.println(moneyChange);
+            player.addMoney(moneyChange);
+        }
+        moneyChange = resourcesList.get(2).updateResourceData(passedTime, 1);
+        if(moneyChange > 0) {
+            player.addMoney(moneyChange);
+        }
+        moneyChange = resourcesList.get(3).updateResourceData(passedTime, 1);
+        if(moneyChange > 0) {
+            player.addMoney(moneyChange);
+        }
+        moneyChange = resourcesList.get(4).updateResourceData(passedTime, 1);
+        if(moneyChange > 0) {
             player.addMoney(moneyChange);
         }
 
@@ -88,18 +97,14 @@ public class GameViewController implements Initializable{
         productionListView.setOnScrollTo(Event::consume);
         productionListView.setOnKeyPressed(Event::consume);
 
-
        balanceButton.textProperty().bind(player.getBalance().asString("$%.0f"));
-
 
         importData();
         setCellFactories();
-
     }
 
     private void setCellFactories() {
         resourcesListView.setCellFactory(v -> new ResourceCell());
-
         productionListView.setCellFactory(null);
         //researchListView.setCellFactory();
     }
@@ -126,7 +131,34 @@ public class GameViewController implements Initializable{
                 5
         );
 
-        resourcesList.addAll(lemons, sugar);
+        Resource apples = new Resource(
+                "Apples",
+                200.0,
+                40.0,
+                1.0,
+                0.5,
+                50
+        );
+
+        Resource bananas = new Resource(
+                "Bananas",
+                400.0,
+                1000.0,
+                1.0,
+                0.2,
+                100
+        );
+
+        Resource moisture = new Resource(
+                "Moisture",
+                1000.0,
+                2000.0,
+                100.0,
+                2.0,
+                100
+        );
+
+        resourcesList.addAll(lemons, sugar, apples, bananas, moisture);
 
         ////
         // Import factories:
@@ -266,18 +298,21 @@ public class GameViewController implements Initializable{
         public void sellOne(Resource resource, User player) {
 
             // sell single item
-            resource.currentStorageProperty().set(resource.currentStorageProperty().get() - 1);
-            player.addMoney(resource.getMarketValue());
-
+            if(resource.currentStorageProperty().get() > 0) {
+                resource.currentStorageProperty().set(resource.currentStorageProperty().get() - 1);
+                player.addMoney(resource.getMarketValue());
+            }
         }
 
         public void sellAll(Resource resource, User player) {
 
             // sell all items
-            double totalValue;
-            totalValue = resource.getMarketValue() * resource.currentStorageProperty().get();
-            resource.currentStorageProperty().set(0);
-            player.addMoney(totalValue);
+            if(resource.currentStorageProperty().get() > 0) {
+                double totalValue;
+                totalValue = resource.getMarketValue() * resource.currentStorageProperty().get();
+                resource.currentStorageProperty().set(0);
+                player.addMoney(totalValue);
+            }
         }
 
         public void addStorer(Resource resource) {
