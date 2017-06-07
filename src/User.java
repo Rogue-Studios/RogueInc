@@ -16,10 +16,18 @@ public class User {
         totalResourcesProduced = 0;
     }
 
+    public boolean ableToSpend(double money) {
+        if(money < balance.get()) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
     public void addMoney(double money) {
         balance.set(balance.get() + money);
         lifetimeMoney += money;
-        System.out.println(balance.get());
     }
 
     public void subtractMoney(double money) {

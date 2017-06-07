@@ -44,7 +44,7 @@ public class Resource {
         this.timeSinceProduction = new SimpleDoubleProperty();
         this.timeSinceProduction.setValue(0);
         this.producerCount = new SimpleIntegerProperty();
-        this.producerCount.setValue(3);
+        this.producerCount.setValue(1);
 
         this.storageIncrement = storageIncrement;
 
