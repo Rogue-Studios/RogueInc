@@ -344,13 +344,19 @@ public class GameViewController implements Initializable{
 
         private void addStorer() {
             // gives the user more storage for the resource
-            resource.maxStorageProperty().set(resource.maxStorageProperty().get() + resource.getStorageIncrement());
-            resource.setStorerCount(resource.getStorerCount() + 1);
+            if (player.ableToSpend(resource.getStorerCost()) == true) {
+                resource.maxStorageProperty().set(resource.maxStorageProperty().get() + resource.getStorageIncrement());
+                resource.setStorerCount(resource.getStorerCount() + 1);
+                player.subtractMoney(resource.getStorerCost());
+            }
         }
 
         private void addProducer() {
             // gives more production to the user
-            resource.producerCountProperty().set(resource.producerCountProperty().get() + 1);
+            if(player.ableToSpend(resource.getProducerCost()) == true) {
+                resource.producerCountProperty().set(resource.producerCountProperty().get() + 1);
+                player.subtractMoney(resource.getProducerCost());
+            }
         }
 
         private void setProperties() {
