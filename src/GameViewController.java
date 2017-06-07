@@ -37,7 +37,7 @@ public class GameViewController implements Initializable{
     private ObservableList<Factory> factoryList;
     //private private ObservableList<Research> researchList;
 
-    private User player;
+    private static User player;
 
     public GameViewController() {
         player = new User(100);
@@ -221,17 +221,20 @@ public class GameViewController implements Initializable{
 
         final JFXButton sellOneButton = new JFXButton("SELL ONE");
         final JFXButton sellAllButton= new JFXButton("SELL ALL");
-        final JFXButton buyProducer= new JFXButton("BUY PRODUCER");
-        final JFXButton buyStorer= new JFXButton("BUY STORAGE");
+        final JFXButton buyProducerButton = new JFXButton("BUY PRODUCER");
+        final JFXButton buyStorerButton = new JFXButton("BUY STORAGE");
         final Pane paneBottom = new Pane();
         final StackPane storageProgressStackpane = new StackPane();
         final Text storageText = new Text("0 / 0");
         final JFXProgressBar storageProgressBar = new JFXProgressBar();
 
+        Resource resource;
+
 
         public ResourceCell() {
             super();
             setProperties();
+            setButtonActions();
         }
 
         @Override
@@ -295,8 +298,33 @@ public class GameViewController implements Initializable{
 
         }
 
-        public void sellOne(Resource resource, User player) {
+        public void setButtonActions() {
+            sellOneButton.setOnAction(v -> {
+                updateCellResource();
+                sellOne();
+            });
 
+            sellAllButton.setOnAction(v -> {
+                updateCellResource();
+                sellAll();
+            });
+
+            buyProducerButton.setOnAction(v -> {
+                updateCellResource();
+                addProducer();
+            });
+
+            buyStorerButton.setOnAction(v -> {
+                updateCellResource();
+                addStorer();
+            });
+        }
+
+        private void updateCellResource() {
+            resource = getItem();
+        }
+
+        private void sellOne() {
             // sell single item
             if(resource.currentStorageProperty().get() > 0) {
                 resource.currentStorageProperty().set(resource.currentStorageProperty().get() - 1);
@@ -304,8 +332,7 @@ public class GameViewController implements Initializable{
             }
         }
 
-        public void sellAll(Resource resource, User player) {
-
+        private void sellAll() {
             // sell all items
             if(resource.currentStorageProperty().get() > 0) {
                 double totalValue;
@@ -315,15 +342,13 @@ public class GameViewController implements Initializable{
             }
         }
 
-        public void addStorer(Resource resource) {
-
+        private void addStorer() {
             // gives the user more storage for the resource
             resource.maxStorageProperty().set(resource.maxStorageProperty().get() + resource.getStorageIncrement());
             resource.setStorerCount(resource.getStorerCount() + 1);
         }
 
-        public void addProducer(Resource resource) {
-
+        private void addProducer() {
             // gives more production to the user
             resource.producerCountProperty().set(resource.producerCountProperty().get() + 1);
         }
@@ -334,7 +359,9 @@ public class GameViewController implements Initializable{
 
             setupButton(nameButton, 14.0, 2,0,0,30, 136, false, true);
             setupButton(numProducersButton, 15.0, 2.0, 0.0, 0.0, 0.0,55, false, true);
+
             nameButton.paddingProperty().setValue(new Insets(0,0,0,2));
+            nameButton.setFont(new Font("System Bold", 14.0));
             numProducersButton.paddingProperty().setValue(new Insets(0,0,1,0));
             HBox.setHgrow(paneTop, Priority.ALWAYS);
 
@@ -357,13 +384,14 @@ public class GameViewController implements Initializable{
             /// BOTTOM ROW
 
             setupButton(sellOneButton);
-            sellOneButton.setPrefWidth(60);
             setupButton(sellAllButton);
+            setupButton(buyProducerButton);
+            setupButton(buyStorerButton);
+
+            sellOneButton.setPrefWidth(60);
             sellAllButton.setPrefWidth(60);
-            setupButton(buyProducer);
-            buyProducer.setPrefWidth(87);
-            setupButton(buyStorer);
-            buyStorer.setPrefWidth(80);
+            buyProducerButton.setPrefWidth(87);
+            buyStorerButton.setPrefWidth(80);
             HBox.setHgrow(paneBottom, Priority.ALWAYS);
 
             storageProgressStackpane.setPrefHeight(20.0);
@@ -382,7 +410,7 @@ public class GameViewController implements Initializable{
             hbox2.setPadding(new Insets(2.0,0,3.0,0));
 
             storageProgressStackpane.getChildren().addAll(storageProgressBar, storageText);
-            hbox2.getChildren().addAll(sellOneButton, sellAllButton, buyProducer, buyStorer, paneBottom,  storageProgressStackpane);
+            hbox2.getChildren().addAll(sellOneButton, sellAllButton, buyProducerButton, buyStorerButton, paneBottom,  storageProgressStackpane);
 
 
             vbox.setPrefWidth(460.0);
