@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.*?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXListView?>
+<?import com.jfoenix.controls.JFXTabPane?>
 <?import javafx.scene.control.Tab?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="854.0" prefWidth="480.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GameViewController">
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="854.0" prefWidth="480.0" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GameViewController">
    <center>
       <JFXTabPane focusTraversable="false" side="BOTTOM" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
          <tabs>
@@ -43,12 +50,12 @@
                   <Pane HBox.hgrow="ALWAYS" />
                   <VBox prefWidth="57.0">
                      <children>
-                        <JFXButton fx:id="buyIncrementButton" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minWidth="-Infinity" onAction="#clickBuyIncrementButton" prefHeight="30.0" prefWidth="57.0" text="x1" textFill="#1fc641">
+                        <JFXButton fx:id="buyProductionIncrementButton" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minWidth="-Infinity" onAction="#clickBuyProductionIncrementButton" prefHeight="30.0" prefWidth="57.0" text="x1" textFill="#1fc641">
                            <font>
                               <Font size="16.0" />
                            </font>
                         </JFXButton>
-                        <JFXButton fx:id="storageIncrementButton" alignment="CENTER" layoutX="10.0" layoutY="10.0" maxWidth="-Infinity" minWidth="-Infinity" onAction="#clickStorageIncrementButton" prefWidth="57.0" text="x10" textFill="#ff9a02">
+                        <JFXButton fx:id="buyStorageIncrementButton" alignment="CENTER" layoutX="10.0" layoutY="10.0" maxWidth="-Infinity" minWidth="-Infinity" onAction="#clickBuyStorageIncrementButton" prefWidth="57.0" text="x10" textFill="#ff9a02">
                            <font>
                               <Font size="16.0" />
                            </font>
