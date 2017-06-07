@@ -242,16 +242,8 @@ public class GameViewController implements Initializable{
                 });
 
                 // UPDATE STORAGE PROGRESSBAR AND TEXT WHEN VALUES CHANGE
-                resource.currentStorageProperty().addListener(v -> {
-                    storageText.setText(Integer.toString(resource.getCurrentStorage()) + " / " + resource.getMaxStorage());
-
-                    if(resource.getMaxStorage() != 0) { // Ensure doesn't divide by 0
-                        storageProgressBar.setProgress((double) resource.getCurrentStorage() / (double) resource.getMaxStorage());
-                    } else {
-                        Main.outputError("Max storage = 0. Cannot divide by 0.");
-                    }
-
-                });
+                resource.currentStorageProperty().addListener(v -> updateStorageGUI());
+                resource.maxStorageProperty().addListener(v -> updateStorageGUI());
 
                 // Update values so listeners are called immediately
                 resource.currentStorageProperty().setValue(resource.getCurrentStorage() + 1);
@@ -264,6 +256,19 @@ public class GameViewController implements Initializable{
                 // NOTE: adding the conditional above could improve efficiency
             }
 
+        }
+
+        private void updateStorageGUI() {
+            //System.out.println("storageText: " + storageText.getText());
+            //System.out.println(resource.currentStorageProperty().getValue());
+            //System.out.println(resource.maxStorageProperty().getValue());
+            storageText.setText(Integer.toString(resource.getCurrentStorage()) + " / " + resource.getMaxStorage());
+
+            if(resource.getMaxStorage() != 0) { // Ensure doesn't divide by 0
+                storageProgressBar.setProgress((double) resource.getCurrentStorage() / (double) resource.getMaxStorage());
+            } else {
+                Main.outputError("Max storage = 0. Cannot divide by 0.");
+            }
         }
 
         public void setButtonActions() {
