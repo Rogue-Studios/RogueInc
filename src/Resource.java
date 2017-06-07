@@ -31,7 +31,7 @@ public class Resource {
         this.currentStorage = new SimpleIntegerProperty();
         this.currentStorage.setValue(0);
         this.maxStorage = new SimpleIntegerProperty();
-        this.maxStorage.setValue(1);
+        this.maxStorage.setValue(10);
 
         this.productionTime = productionTime;
         this.timeSinceProduction = new SimpleDoubleProperty();

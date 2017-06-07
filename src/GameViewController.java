@@ -249,9 +249,9 @@ public class GameViewController implements Initializable{
                     }
 
                 });
-
-                // Doesn't seem to work...
-                //resource.currentStorageProperty().setValue(resource.getCurrentStorage());
+                // this is stupid but it works so oh well...
+                resource.currentStorageProperty().setValue(resource.getCurrentStorage() + 1);
+                resource.currentStorageProperty().setValue(resource.getCurrentStorage() - 1);
 
                 // Set progressbar when cell is first created
                 //(in-case property listener isn't called immediately)
