@@ -40,7 +40,7 @@ public class GameViewController implements Initializable{
     private static User player;
 
     public GameViewController() {
-        player = new User(100);
+        player = new User(100000000);
 
     }
 
@@ -56,12 +56,14 @@ public class GameViewController implements Initializable{
     public void tick(double passedTime) {
 
         double moneyChange;
-        for(int i = 0; i < resourcesList.size(); i++) {
+
+        for (int i = 0; i < resourcesList.size(); i++) {
             moneyChange = resourcesList.get(i).updateResourceData(passedTime, 1);
-            if (moneyChange > 0) {
+            if(moneyChange > 0) {
                 player.addMoney(moneyChange);
             }
         }
+
     }
 
     @Override
@@ -144,7 +146,7 @@ public class GameViewController implements Initializable{
         );
 
         resourcesList.addAll(lemons, sugar, apples, bananas, moisture);
-        //resourcesList.addAll(lemons);
+        //resourcesList.addAll(lemons, sugar, apples);
         ////
         // Import factories:
 
@@ -201,7 +203,7 @@ public class GameViewController implements Initializable{
         final JFXButton numProducersButton = new JFXButton("5");
         final Pane paneTop = new Pane();
         final StackPane timerProgressStackpane = new StackPane();
-        final Text timerProgressText = new Text("Nah");
+        final Text timerProgressText = new Text("0");
         final JFXProgressBar timerProgressBar = new JFXProgressBar();
 
         final JFXButton sellOneButton = new JFXButton("SELL ONE");
@@ -213,13 +215,10 @@ public class GameViewController implements Initializable{
         final Text storageText = new Text("0 / 0");
         final JFXProgressBar storageProgressBar = new JFXProgressBar();
 
-        Resource resource;
-
 
         public ResourceCell() {
             super();
             setProperties();
-            setButtonActions();
         }
 
         @Override
@@ -269,6 +268,8 @@ public class GameViewController implements Initializable{
                 resource.timeSinceProductionProperty().setValue(resource.getTimeSinceProduction() + 1);
                 resource.timeSinceProductionProperty().setValue(resource.getTimeSinceProduction() - 1);
 
+                setButtonActions(resource);
+
                 // if(!nameButton.textProperty().isBound()) {}
                 // NOTE: adding the conditional above could improve efficiency
             }
@@ -288,65 +289,45 @@ public class GameViewController implements Initializable{
             }
         }
 
-        public void setButtonActions() {
+        public void setButtonActions( Resource resource) {
             sellOneButton.setOnAction(v -> {
-                updateCellResource();
-                sellOne();
+
+                // sell single item
+                if(resource.currentStorageProperty().get() > 0) {
+                    resource.currentStorageProperty().set(resource.currentStorageProperty().get() - 1);
+                    player.addMoney(resource.getMarketValue());
+                }
             });
 
             sellAllButton.setOnAction(v -> {
-                updateCellResource();
-                sellAll();
+
+                // sell all items
+                if(resource.currentStorageProperty().get() > 0) {
+                    double totalValue;
+                    totalValue = resource.getMarketValue() * resource.currentStorageProperty().get();
+                    resource.currentStorageProperty().set(0);
+                    player.addMoney(totalValue);
+                }
             });
 
             buyProducerButton.setOnAction(v -> {
-                updateCellResource();
-                addProducer();
+
+                // gives more production to the user
+                if(player.ableToSpend(resource.getProducerCost()) == true) {
+                    resource.producerCountProperty().set(resource.producerCountProperty().get() + 1);
+                    player.subtractMoney(resource.getProducerCost());
+                }
             });
 
             buyStorerButton.setOnAction(v -> {
-                updateCellResource();
-                addStorer();
+
+                // gives the user more storage for the resource
+                if (player.ableToSpend(resource.getStorerCost()) == true) {
+                    resource.maxStorageProperty().set(resource.maxStorageProperty().get() + resource.getStorageIncrement());
+                    resource.setStorerCount(resource.getStorerCount() + 1);
+                    player.subtractMoney(resource.getStorerCost());
+                }
             });
-        }
-
-        private void updateCellResource() {
-            resource = getItem();
-        }
-
-        private void sellOne() {
-            // sell single item
-            if(resource.currentStorageProperty().get() > 0) {
-                resource.currentStorageProperty().set(resource.currentStorageProperty().get() - 1);
-                player.addMoney(resource.getMarketValue());
-            }
-        }
-
-        private void sellAll() {
-            // sell all items
-            if(resource.currentStorageProperty().get() > 0) {
-                double totalValue;
-                totalValue = resource.getMarketValue() * resource.currentStorageProperty().get();
-                resource.currentStorageProperty().set(0);
-                player.addMoney(totalValue);
-            }
-        }
-
-        private void addStorer() {
-            // gives the user more storage for the resource
-            if (player.ableToSpend(resource.getStorerCost()) == true) {
-                resource.maxStorageProperty().set(resource.maxStorageProperty().get() + resource.getStorageIncrement());
-                resource.setStorerCount(resource.getStorerCount() + 1);
-                player.subtractMoney(resource.getStorerCost());
-            }
-        }
-
-        private void addProducer() {
-            // gives more production to the user
-            if(player.ableToSpend(resource.getProducerCost()) == true) {
-                resource.producerCountProperty().set(resource.producerCountProperty().get() + 1);
-                player.subtractMoney(resource.getProducerCost());
-            }
         }
 
         private void setProperties() {
