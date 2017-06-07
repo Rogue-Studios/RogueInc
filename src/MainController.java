@@ -20,9 +20,7 @@ public class MainController extends Stage {
 
         loadFXMLLoaders();
         loadScene();
-
-
-
+        gameViewController.start();
 
     }
 

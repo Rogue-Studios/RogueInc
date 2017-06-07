@@ -1,6 +1,9 @@
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXProgressBar;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
@@ -15,6 +18,7 @@ import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
+import javafx.util.Duration;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -37,9 +41,24 @@ public class GameViewController implements Initializable{
 
     public GameViewController() {
         this.balance = 100.0;
+    }
+
+    public void start() {
+
+        Timeline timer = new Timeline((new KeyFrame(Duration.millis(60), event -> tick(0.06))));
+        timer.setCycleCount(Animation.INDEFINITE);
+        timer.play();
 
     }
-    
+
+    public void tick(double passedTime) {
+
+
+        System.out.println(Double.toString(0.06));
+        resourcesList.get(0).updateResourceData(passedTime, 1);
+
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         resourcesList = FXCollections.observableArrayList();
@@ -186,7 +205,7 @@ public class GameViewController implements Initializable{
                 }
 
                 resource.currentStorageProperty().addListener(v -> {
-                    System.out.println("Current storage: " + resource.getCurrentStorage());
+                    // System.out.println("Current storage: " + resource.getCurrentStorage());
                     storageProgressBar.setProgress(resource.getCurrentStorage() / resource.getMaxStorage());
                 });
 
