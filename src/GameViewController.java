@@ -29,7 +29,7 @@ public class GameViewController implements Initializable{
     @FXML private JFXListView<Resource> resourcesListView;
     @FXML private JFXListView<Factory> productionListView;
     //@FXML private JFXListView<Research> researchListView;
-    @FXML private JFXButton leaderboardButton;
+    @FXML private JFXButton menuButton;
     @FXML private JFXButton balanceButton = new JFXButton();
     @FXML private JFXButton settingsButton;
 
@@ -169,6 +169,26 @@ public class GameViewController implements Initializable{
         ////
         // Import research:
 
+
+    }
+
+    @FXML
+    private void clickBuyIncrementButton() {
+
+    }
+
+    @FXML
+    private void clickStorageIncrementButton() {
+
+    }
+
+    @FXML
+    private void clickSellIncrementButton() {
+
+    }
+
+    @FXML
+    private void clickMenuButton() {
 
     }
 

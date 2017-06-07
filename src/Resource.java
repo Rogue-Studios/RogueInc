@@ -28,7 +28,7 @@ public class Resource {
     public Resource(String name, double producerCost, double storerCost, double marketValue, double productionTime, int storageIncrement) {
 
         this.name = new SimpleStringProperty();
-        this.name.setValue(name + " ($" + Double.toString(marketValue) + ")");
+        this.name.setValue(name + String.format(" ($%.0f)", marketValue));
 
         this.unlocked = false;
         this.producerCost = producerCost;
