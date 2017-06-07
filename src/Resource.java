@@ -42,7 +42,6 @@ public class Resource {
 
     public double updateResourceData(double timePassed, double overFlowModifier) {
 
-
         // this is overkill for normal running but is necessary for relaunching the program and calculating the difference in time
         double overFlowMoney = 0;
         timeSinceProduction.set(timeSinceProduction.get() + timePassed);
@@ -70,6 +69,33 @@ public class Resource {
 
         }
         return overFlowMoney;
+    }
+
+    public double sellOne() {
+
+        // sell single item
+        currentStorage.set(currentStorage.get() - 1);
+        return marketValue;
+
+    }
+
+    public double sellAll() {
+
+        // sell all items
+        double totalValue;
+        totalValue = marketValue * currentStorage.get();
+        currentStorage.set(0);
+        return totalValue;
+
+    }
+
+    public double getTotalValue() {
+
+        // get the value of all items in storage
+        double totalValue;
+        totalValue = marketValue * currentStorage.get();
+        return totalValue;
+
     }
 
     public boolean isUnlocked() {

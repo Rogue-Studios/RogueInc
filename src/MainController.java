@@ -21,6 +21,9 @@ public class MainController extends Stage {
         loadFXMLLoaders();
         loadScene();
 
+
+
+
     }
 
     public void loadFXMLLoaders() {
