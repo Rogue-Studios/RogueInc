@@ -74,15 +74,10 @@
                         <Insets />
                      </StackPane.margin>
                   </JFXProgressBar>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="10" textAlignment="CENTER" StackPane.alignment="CENTER_LEFT">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="10000" textAlignment="CENTER" StackPane.alignment="CENTER">
                      <StackPane.margin>
                         <Insets />
                      </StackPane.margin>
-                     <font>
-                        <Font size="15.0" />
-                     </font>
-                  </Text>
-                  <Text layoutX="43.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="100" textAlignment="CENTER" StackPane.alignment="CENTER_RIGHT">
                      <font>
                         <Font size="15.0" />
                      </font>

@@ -192,9 +192,7 @@ public class GameViewController implements Initializable{
         final JFXButton buyStorer= new JFXButton("BUY STORAGE");
         final Pane paneBottom = new Pane();
         final StackPane storageProgressStackpane = new StackPane();
-        final Text currentStorageText = new Text("1");
-        //final Text storageSeparatorText = new Text("/");
-        final Text maxStorageText = new Text("100");
+        final Text storageText = new Text("0 / 0");
         final JFXProgressBar storageProgressBar = new JFXProgressBar();
 
 
@@ -239,12 +237,13 @@ public class GameViewController implements Initializable{
                 //// UPDATE STORAGE VALUES
 
                 // Storage values will automatically update when the resource's storage properties change
-                currentStorageText.textProperty().bind(resource.currentStorageProperty().asString());
-                maxStorageText.textProperty().bind(resource.maxStorageProperty().asString());
+                //storageText.textProperty().bind(resource.currentStorageProperty().asString());
 
                 resource.currentStorageProperty().addListener(v -> {
+                    storageText.setText(Integer.toString(resource.getCurrentStorage()) + " / " + resource.getMaxStorage());
+
                     if(resource.getMaxStorage() != 0) { // Ensure doesn't divide by 0
-                        storageProgressBar.setProgress(resource.getCurrentStorage() / resource.getMaxStorage());
+                        storageProgressBar.setProgress((double) resource.getCurrentStorage() / (double) resource.getMaxStorage());
                     } else {
                         Main.outputError("Max storage = 0. Cannot divide by 0.");
                     }
@@ -265,9 +264,6 @@ public class GameViewController implements Initializable{
                     storageProgressBar.setProgress(resource.getCurrentStorage() / resource.getMaxStorage());
                 }
                 */
-
-
-
 
                 // if(!nameText.textProperty().isBound()) {}
                 // NOTE: adding the conditional above could improve efficiency
@@ -316,18 +312,17 @@ public class GameViewController implements Initializable{
             HBox.setMargin(storageProgressStackpane, new Insets(0,5,0,0));
             storageProgressBar.setPrefHeight(20.0);
             //StackPane.setMargin(storageProgressBar, new Insets(0));
-            setupText(currentStorageText, 15.0, 0.0, 0.0, 0.0, 0.0, TextAlignment.CENTER);
-            StackPane.setAlignment(currentStorageText, Pos.CENTER_LEFT);
-            //setupText(storageSeparatorText, 15.0, 0.0, 0.0, 0.0, 0.0, TextAlignment.CENTER);
-            setupText(maxStorageText, 15.0, 0.0, 0.0, 0.0, 0.0, TextAlignment.CENTER);
-            StackPane.setAlignment(maxStorageText, Pos.CENTER_RIGHT);
+
+            setupText(storageText, 15.0, 0.0, 0.0, 0.0, 0.0, TextAlignment.CENTER);
+            StackPane.setMargin(storageText, new Insets(0,0,0,0));
+            StackPane.setAlignment(storageText, Pos.CENTER);
 
 
             hbox2.setPrefHeight(25.0);
             hbox2.setPrefWidth(460.0);
             hbox2.setPadding(new Insets(2.0,0,3.0,0));
 
-            storageProgressStackpane.getChildren().addAll(storageProgressBar, currentStorageText, maxStorageText);
+            storageProgressStackpane.getChildren().addAll(storageProgressBar, storageText);
             hbox2.getChildren().addAll(sellOneButton, sellAllButton, buyProducer, buyStorer, paneBottom,  storageProgressStackpane);
 
 
