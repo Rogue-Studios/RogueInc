@@ -213,6 +213,7 @@ public class GameViewController implements Initializable{
                 //// UPDATE RESOURCE NAME & PRODUCTION VALUES
 
                 // nameText and productionAmountText will automatically update when the resource's name and producerCount change
+                // UPDATE RESOURCE NAME & PRODUCER TEXT WHEN VALUES CHANGE
                 nameButton.textProperty().bind(resource.nameProperty());
 
                 resource.producerCountProperty().addListener(v -> {
@@ -224,9 +225,7 @@ public class GameViewController implements Initializable{
                 // productionAmountText.textProperty().bind(resource.producerCountProperty().asString("x" + resource.getMarketValue()));
                 //timerProgressText.textProperty().bind(resource.timeSinceProductionProperty().asString());
 
-                //// UPDATE TIMER VALUES
-
-                // Update timer progressbar and text whenever time value changes
+                // UPDATE TIMER PROGRESSBAR AND TEXT WHEN TIME VALUE CHANGES
                 resource.timeSinceProductionProperty().addListener(v -> {
                     Double timeLeft = resource.getProductionTime() - resource.getTimeSinceProduction();
                     timerProgressText.setText(String.format("%.2f", timeLeft));
@@ -239,14 +238,7 @@ public class GameViewController implements Initializable{
 
                 });
 
-                // Doesn't seem to work...
-                //resource.timeSinceProductionProperty().setValue(resource.getTimeSinceProduction());
-
-                //// UPDATE STORAGE VALUES
-
-                // Storage values will automatically update when the resource's storage properties change
-                //storageText.textProperty().bind(resource.currentStorageProperty().asString());
-
+                // UPDATE STORAGE PROGRESSBAR AND TEXT WHEN VALUES CHANGE
                 resource.currentStorageProperty().addListener(v -> {
                     storageText.setText(Integer.toString(resource.getCurrentStorage()) + " / " + resource.getMaxStorage());
 
@@ -257,21 +249,13 @@ public class GameViewController implements Initializable{
                     }
 
                 });
-                // this is stupid but it works so oh well...
+
+                // Update values so listeners are called immediately
                 resource.currentStorageProperty().setValue(resource.getCurrentStorage() + 1);
                 resource.currentStorageProperty().setValue(resource.getCurrentStorage() - 1);
 
-                // Set progressbar when cell is first created
-                //(in-case property listener isn't called immediately)
-
-                /*
-                if(resource.getMaxStorage() == 0) {
-                    // Prevent it from trying to divide by 0 if maxStorage == 0
-                    storageProgressBar.setProgress(0);
-                } else {
-                    storageProgressBar.setProgress(resource.getCurrentStorage() / resource.getMaxStorage());
-                }
-                */
+                resource.timeSinceProductionProperty().setValue(resource.getTimeSinceProduction() + 1);
+                resource.timeSinceProductionProperty().setValue(resource.getTimeSinceProduction() - 1);
 
                 // if(!nameButton.textProperty().isBound()) {}
                 // NOTE: adding the conditional above could improve efficiency
