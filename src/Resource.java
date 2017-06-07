@@ -18,10 +18,17 @@ public class Resource {
     private int storerCount;
     private double speedModifier;
 
-    public Resource(String name, double producerCost, double storerCost, double marketValue, double productionTime) {
+    public int getStorageIncrement() {
+        return storageIncrement;
+    }
+
+    private int storageIncrement;
+
+
+    public Resource(String name, double producerCost, double storerCost, double marketValue, double productionTime, int storageIncrement) {
 
         this.name = new SimpleStringProperty();
-        this.name.setValue(name);
+        this.name.setValue(name + " ($" + Double.toString(marketValue) + ")");
 
         this.unlocked = false;
         this.producerCost = producerCost;
@@ -37,7 +44,9 @@ public class Resource {
         this.timeSinceProduction = new SimpleDoubleProperty();
         this.timeSinceProduction.setValue(0);
         this.producerCount = new SimpleIntegerProperty();
-        this.producerCount.setValue(0);
+        this.producerCount.setValue(3);
+
+        this.storageIncrement = storageIncrement;
 
         this.storerCount = 0;
         this.speedModifier = 1;
@@ -54,7 +63,7 @@ public class Resource {
             int numberOfProductions;
 
             // calculates how many times a resource has been produced
-            numberOfProductions = (int) (Math.floor(timeSinceProduction.get() / productionTime));
+            numberOfProductions = (int) (Math.floor(timeSinceProduction.get() / productionTime)) * producerCountProperty().get();
 
             // checks to see if storage will overflow
             if (currentStorage.get() + numberOfProductions > maxStorage.get()) {
@@ -75,24 +84,6 @@ public class Resource {
         return overFlowMoney;
     }
 
-    public double sellOne() {
-
-        // sell single item
-        currentStorage.set(currentStorage.get() - 1);
-        return marketValue;
-
-    }
-
-    public double sellAll() {
-
-        // sell all items
-        double totalValue;
-        totalValue = marketValue * currentStorage.get();
-        currentStorage.set(0);
-        return totalValue;
-
-    }
-
     public double getTotalValue() {
 
         // get the value of all items in storage
@@ -101,6 +92,8 @@ public class Resource {
         return totalValue;
 
     }
+
+
 
     public boolean isUnlocked() {
         return unlocked;

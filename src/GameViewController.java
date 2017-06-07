@@ -113,7 +113,8 @@ public class GameViewController implements Initializable{
                 50.0,
                 10.0,
                 2.0,
-                5.0
+                5.0,
+                10
         );
 
         Resource sugar = new Resource(
@@ -121,7 +122,8 @@ public class GameViewController implements Initializable{
                 100.0,
                 20.0,
                 5.0,
-                8.0
+                8.0,
+                5
         );
 
         resourcesList.addAll(lemons, sugar);
@@ -212,7 +214,14 @@ public class GameViewController implements Initializable{
 
                 // nameText and productionAmountText will automatically update when the resource's name and producerCount change
                 nameText.textProperty().bind(resource.nameProperty());
-                productionAmountText.textProperty().bind(resource.producerCountProperty().asString());
+
+                resource.producerCountProperty().addListener(v -> {
+                            productionAmountText.setText(String.format(resource.producerCountProperty().get() + "x"));
+                });
+
+                productionAmountText.setText("a");
+                productionAmountText.setText(String.format(resource.producerCountProperty().get() + "x"));
+                // productionAmountText.textProperty().bind(resource.producerCountProperty().asString("x" + resource.getMarketValue()));
                 //timerProgressText.textProperty().bind(resource.timeSinceProductionProperty().asString());
 
                 //// UPDATE TIMER VALUES
@@ -268,6 +277,36 @@ public class GameViewController implements Initializable{
                 // NOTE: adding the conditional above could improve efficiency
             }
 
+        }
+
+        public void sellOne(Resource resource, User player) {
+
+            // sell single item
+            resource.currentStorageProperty().set(resource.currentStorageProperty().get() - 1);
+            player.addMoney(resource.getMarketValue());
+
+        }
+
+        public void sellAll(Resource resource, User player) {
+
+            // sell all items
+            double totalValue;
+            totalValue = resource.getMarketValue() * resource.currentStorageProperty().get();
+            resource.currentStorageProperty().set(0);
+            player.addMoney(totalValue);
+        }
+
+        public void addStorer(Resource resource) {
+
+            // gives the user more storage for the resource
+            resource.maxStorageProperty().set(resource.maxStorageProperty().get() + resource.getStorageIncrement());
+            resource.setStorerCount(resource.getStorerCount() + 1);
+        }
+
+        public void addProducer(Resource resource) {
+
+            // gives more production to the user
+            resource.producerCountProperty().set(resource.producerCountProperty().get() + 1);
         }
 
         private void setProperties() {
