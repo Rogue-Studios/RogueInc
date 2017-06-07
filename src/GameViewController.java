@@ -136,8 +136,8 @@ public class GameViewController implements Initializable{
                 100
         );
 
-        Resource moisture = new Resource(
-                "Moisture",
+        Resource moistureFarm = new Resource(
+                "Moisture Farm",
                 1000.0,
                 2000.0,
                 100.0,
@@ -145,7 +145,7 @@ public class GameViewController implements Initializable{
                 100
         );
 
-        resourcesList.addAll(lemons, sugar, apples, bananas, moisture);
+        resourcesList.addAll(lemons, sugar, apples, bananas, moistureFarm);
         //resourcesList.addAll(lemons, sugar, apples);
         ////
         // Import factories:
