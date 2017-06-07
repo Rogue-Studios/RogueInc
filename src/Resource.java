@@ -31,7 +31,7 @@ public class Resource {
         this.currentStorage = new SimpleIntegerProperty();
         this.currentStorage.setValue(0);
         this.maxStorage = new SimpleIntegerProperty();
-        this.maxStorage.setValue(0);
+        this.maxStorage.setValue(1);
 
         this.productionTime = productionTime;
         this.timeSinceProduction = new SimpleDoubleProperty();
@@ -72,7 +72,6 @@ public class Resource {
             timeSinceProduction.set(timeSinceProduction.get() % productionTime);
 
         }
-        producerCount.setValue(currentStorage.getValue());
         return overFlowMoney;
     }
 

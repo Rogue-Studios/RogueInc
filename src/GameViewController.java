@@ -30,17 +30,20 @@ public class GameViewController implements Initializable{
     @FXML private JFXListView<Factory> productionListView;
     //@FXML private JFXListView<Research> researchListView;
     @FXML private JFXButton leaderboardButton;
-    @FXML private JFXButton balanceButton;
+    @FXML private JFXButton balanceButton = new JFXButton();
     @FXML private JFXButton settingsButton;
 
     private ObservableList<Resource> resourcesList;
     private ObservableList<Factory> factoryList;
     //private private ObservableList<Research> researchList;
 
-    private double balance;
+    private User player;
 
     public GameViewController() {
-        this.balance = 100.0;
+        player = new User(100);
+
+
+
     }
 
     public void start() {
@@ -55,8 +58,17 @@ public class GameViewController implements Initializable{
 
     public void tick(double passedTime) {
 
-        resourcesList.get(0).updateResourceData(passedTime, 1);
-        resourcesList.get(1).updateResourceData(passedTime, 1);
+        double moneyChange;
+        moneyChange = resourcesList.get(0).updateResourceData(passedTime, 1);
+        if(moneyChange > 0) {
+            System.out.println(moneyChange);
+            player.addMoney(moneyChange);
+        }
+        moneyChange = resourcesList.get(1).updateResourceData(passedTime, 1);
+        if(moneyChange > 0) {
+            System.out.println(moneyChange);
+            player.addMoney(moneyChange);
+        }
 
     }
 
@@ -77,14 +89,12 @@ public class GameViewController implements Initializable{
         productionListView.setOnScrollTo(Event::consume);
         productionListView.setOnKeyPressed(Event::consume);
 
+
+       balanceButton.textProperty().bind(player.getBalance().asString("$%.0f"));
+
+
         importData();
-
         setCellFactories();
-
-        resourcesList.get(0).setCurrentStorage(50);
-        resourcesList.get(0).setMaxStorage(100);
-        resourcesList.get(0).setTimeSinceProduction(5.00);
-        resourcesList.get(0).nameProperty().setValue("Lemon test?");
 
     }
 
@@ -103,7 +113,7 @@ public class GameViewController implements Initializable{
                 "Lemons",
                 50.0,
                 10.0,
-                1.0,
+                2.0,
                 5.0
         );
 
