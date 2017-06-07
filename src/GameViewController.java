@@ -180,8 +180,8 @@ public class GameViewController implements Initializable{
         final HBox hbox1 = new HBox();
         final HBox hbox2 = new HBox();
 
-        final Text nameText = new Text("NAME");
-        final Text productionAmountText = new Text("5");
+        final JFXButton nameButton = new JFXButton("NAME");
+        final JFXButton numProducersButton = new JFXButton("5");
         final Pane paneTop = new Pane();
         final StackPane timerProgressStackpane = new StackPane();
         final Text timerProgressText = new Text("Nah");
@@ -213,14 +213,14 @@ public class GameViewController implements Initializable{
                 //// UPDATE RESOURCE NAME & PRODUCTION VALUES
 
                 // nameText and productionAmountText will automatically update when the resource's name and producerCount change
-                nameText.textProperty().bind(resource.nameProperty());
+                nameButton.textProperty().bind(resource.nameProperty());
 
                 resource.producerCountProperty().addListener(v -> {
-                            productionAmountText.setText(String.format(resource.producerCountProperty().get() + "x"));
+                            numProducersButton.setText(String.format(resource.producerCountProperty().get() + "x"));
                 });
 
-                productionAmountText.setText("a");
-                productionAmountText.setText(String.format(resource.producerCountProperty().get() + "x"));
+                numProducersButton.setText("a");
+                numProducersButton.setText(String.format(resource.producerCountProperty().get() + "x"));
                 // productionAmountText.textProperty().bind(resource.producerCountProperty().asString("x" + resource.getMarketValue()));
                 //timerProgressText.textProperty().bind(resource.timeSinceProductionProperty().asString());
 
@@ -273,7 +273,7 @@ public class GameViewController implements Initializable{
                 }
                 */
 
-                // if(!nameText.textProperty().isBound()) {}
+                // if(!nameButton.textProperty().isBound()) {}
                 // NOTE: adding the conditional above could improve efficiency
             }
 
@@ -313,8 +313,10 @@ public class GameViewController implements Initializable{
 
             /// TOP ROW
 
-            setupText(nameText, 17.0, 0.0, 30.0, 0.0, 30.0, TextAlignment.CENTER);
-            setupText(productionAmountText, 14.0, 3.0, 30.0, 0.0, 30.0, TextAlignment.CENTER);
+            setupButton(nameButton, 14.0, 2,0,0,30, 136, false, true);
+            setupButton(numProducersButton, 15.0, 2.0, 0.0, 0.0, 0.0,55, false, true);
+            nameButton.paddingProperty().setValue(new Insets(0,0,0,2));
+            numProducersButton.paddingProperty().setValue(new Insets(0,0,1,0));
             HBox.setHgrow(paneTop, Priority.ALWAYS);
 
             timerProgressStackpane.setPrefHeight(20.0);
@@ -331,7 +333,7 @@ public class GameViewController implements Initializable{
             hbox1.setPadding(new Insets(3.0,0,2.0,0));
 
             timerProgressStackpane.getChildren().addAll(timerProgressBar, timerProgressText);
-            hbox1.getChildren().addAll(nameText, productionAmountText, paneTop, timerProgressStackpane);
+            hbox1.getChildren().addAll(nameButton, numProducersButton, paneTop, timerProgressStackpane);
 
             /// BOTTOM ROW
 
@@ -382,8 +384,21 @@ public class GameViewController implements Initializable{
             //button.setPrefSize(25.0, 25.0);
             button.setTextAlignment(TextAlignment.CENTER);
             button.setFocusTraversable(false);
+            button.setEllipsisString("..");
             button.setFont(new Font(10.0));
             HBox.setMargin(button, new Insets(0,2,0,2));
+        }
+
+        public static void setupButton(Button button, double fontSize, double top, double right, double bottom, double left, double prefWidth, boolean focusTraversable, boolean mouseTransparent) {
+            button.setAlignment(Pos.CENTER);
+            button.setTextAlignment(TextAlignment.CENTER);
+            button.setFocusTraversable(false);
+            button.setEllipsisString("..");
+            button.setFont(new Font(fontSize));
+            HBox.setMargin(button, new Insets(top,right,bottom,left));
+            button.setPrefWidth(prefWidth);
+            button.setFocusTraversable(focusTraversable);
+            button.setMouseTransparent(mouseTransparent);
         }
 
     }
