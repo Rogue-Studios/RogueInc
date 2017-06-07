@@ -42,8 +42,6 @@ public class GameViewController implements Initializable{
     public GameViewController() {
         player = new User(100);
 
-
-
     }
 
     public void start() {
@@ -74,6 +72,7 @@ public class GameViewController implements Initializable{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
         // Set up arraylists and link them with listviews
 
         resourcesList = FXCollections.observableArrayList();
