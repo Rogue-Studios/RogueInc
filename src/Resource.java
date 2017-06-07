@@ -34,6 +34,7 @@ public class Resource {
         this.timeSinceProduction = new SimpleDoubleProperty();
         this.timeSinceProduction.setValue(0);
         this.producerCount = new SimpleIntegerProperty();
+        this.producerCount.setValue(0);
 
         this.storerCount = 0;
         this.speedModifier = 1;
@@ -68,6 +69,7 @@ public class Resource {
             timeSinceProduction.set(timeSinceProduction.get() % productionTime);
 
         }
+        producerCount.setValue(currentStorage.getValue());
         return overFlowMoney;
     }
 

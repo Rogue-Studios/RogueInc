@@ -45,7 +45,9 @@ public class GameViewController implements Initializable{
 
     public void start() {
 
-        Timeline timer = new Timeline((new KeyFrame(Duration.millis(60), event -> tick(0.06))));
+        final double tickTime = 50;
+
+        Timeline timer = new Timeline((new KeyFrame(Duration.millis(tickTime), event -> tick((tickTime / 1000)))));
         timer.setCycleCount(Animation.INDEFINITE);
         timer.play();
 
@@ -53,9 +55,8 @@ public class GameViewController implements Initializable{
 
     public void tick(double passedTime) {
 
-
-        System.out.println(Double.toString(0.06));
         resourcesList.get(0).updateResourceData(passedTime, 1);
+        resourcesList.get(1).updateResourceData(passedTime, 1);
 
     }
 
