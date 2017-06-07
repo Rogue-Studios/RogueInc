@@ -53,14 +53,14 @@ public class GameViewController implements Initializable{
 
     public void tick(double passedTime) {
 
-
-        System.out.println(Double.toString(0.06));
         resourcesList.get(0).updateResourceData(passedTime, 1);
 
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        // Set up arraylists and link them with listviews
+
         resourcesList = FXCollections.observableArrayList();
         factoryList = FXCollections.observableArrayList();
         //researchList = FXCollections.observableArrayList();
@@ -139,17 +139,26 @@ public class GameViewController implements Initializable{
 
     }
 
-    private void loadSaveData() {
-
-    }
-
-    private void writeSaveData() {
-
-    }
-
     //////////////////////////////
     //       CUSTOM CELLS       //
     //////////////////////////////
+
+
+    public ObservableList<Resource> getResourcesList() {
+        return resourcesList;
+    }
+
+    public void setResourcesList(ObservableList<Resource> resourcesList) {
+        this.resourcesList = resourcesList;
+    }
+
+    public ObservableList<Factory> getFactoryList() {
+        return factoryList;
+    }
+
+    public void setFactoryList(ObservableList<Factory> factoryList) {
+        this.factoryList = factoryList;
+    }
 
     static class ResourceCell extends ListCell<Resource> {
 
@@ -158,7 +167,7 @@ public class GameViewController implements Initializable{
         final HBox hbox2 = new HBox();
 
         final Text nameText = new Text("NAME");
-        final Text productionAmountText = new Text("0");
+        final Text productionAmountText = new Text("5");
         final Pane paneTop = new Pane();
         final StackPane timerProgressStackpane = new StackPane();
         final Text timerProgressText = new Text("Nah");
@@ -186,28 +195,65 @@ public class GameViewController implements Initializable{
             super.updateItem(resource, empty);
 
             if (resource != null) {
+                // Use vbox for cell display
                 setGraphic(vbox);
 
+                //// UPDATE RESOURCE NAME & PRODUCTION VALUES
+
+                // nameText and productionAmountText will automatically update when the resource's name and producerCount change
                 nameText.textProperty().bind(resource.nameProperty());
-
                 productionAmountText.textProperty().bind(resource.producerCountProperty().asString());
+                //timerProgressText.textProperty().bind(resource.timeSinceProductionProperty().asString());
 
-                timerProgressText.textProperty().bind(resource.timeSinceProductionProperty().asString());
+                //// UPDATE TIMER VALUES
 
+                // Update timer progressbar and text whenever time value changes
+                resource.timeSinceProductionProperty().addListener(v -> {
+                    Double timeLeft = resource.getProductionTime() - resource.getTimeSinceProduction();
+                    timerProgressText.setText(String.format("%.2f", timeLeft));
+
+                    if(resource.getProductionTime() != 0) { // Ensure doesn't divide by 0
+                        timerProgressBar.setProgress(timeLeft / resource.getProductionTime());
+                    } else {
+                        Main.outputError("Production time = 0. Cannot divide by 0.");
+                    }
+
+                });
+
+                // Doesn't seem to work...
+                //resource.timeSinceProductionProperty().setValue(resource.getTimeSinceProduction());
+
+                //// UPDATE STORAGE VALUES
+
+                // Storage values will automatically update when the resource's storage properties change
                 currentStorageText.textProperty().bind(resource.currentStorageProperty().asString());
                 maxStorageText.textProperty().bind(resource.maxStorageProperty().asString());
 
+                resource.currentStorageProperty().addListener(v -> {
+                    if(resource.getMaxStorage() != 0) { // Ensure doesn't divide by 0
+                        storageProgressBar.setProgress(resource.getCurrentStorage() / resource.getMaxStorage());
+                    } else {
+                        Main.outputError("Max storage = 0. Cannot divide by 0.");
+                    }
+
+                });
+
+                // Doesn't seem to work...
+                //resource.currentStorageProperty().setValue(resource.getCurrentStorage());
+
+                // Set progressbar when cell is first created
+                //(in-case property listener isn't called immediately)
+
+                /*
                 if(resource.getMaxStorage() == 0) {
+                    // Prevent it from trying to divide by 0 if maxStorage == 0
                     storageProgressBar.setProgress(0);
                 } else {
                     storageProgressBar.setProgress(resource.getCurrentStorage() / resource.getMaxStorage());
-                    storageProgressBar.setProgress(0.5);
                 }
+                */
 
-                resource.currentStorageProperty().addListener(v -> {
-                    // System.out.println("Current storage: " + resource.getCurrentStorage());
-                    storageProgressBar.setProgress(resource.getCurrentStorage() / resource.getMaxStorage());
-                });
+
 
 
                 // if(!nameText.textProperty().isBound()) {}
@@ -277,14 +323,14 @@ public class GameViewController implements Initializable{
             vbox.getChildren().addAll(hbox1, hbox2);
         }
 
-        private void setupText(Text text, double fontSize, double top, double right, double bottom, double left, TextAlignment alignment) {
+        private static void setupText(Text text, double fontSize, double top, double right, double bottom, double left, TextAlignment alignment) {
             text.setTextAlignment(alignment);
             text.setTextOrigin(VPos.CENTER);
             text.setFont(new Font(fontSize));
             HBox.setMargin(text, new Insets(top, right, bottom, left));
         }
 
-        private void setupButton(Button button) {
+        private static void setupButton(Button button) {
             button.setAlignment(Pos.CENTER);
             //button.setContentDisplay(ContentDisplay.CENTER);
             //button.setPrefSize(25.0, 25.0);
