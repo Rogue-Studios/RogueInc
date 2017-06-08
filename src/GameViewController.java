@@ -300,7 +300,7 @@ public class GameViewController implements Initializable {
 
 		final StackPane storerStackpane = new StackPane();
 		final JFXButton buyStorerButton = new JFXButton("Buy");
-		final JFXButton buyStorerNumButton = new JFXButton();
+		final JFXButton buyStorerNumButton = new JFXButton("$20");
 		final JFXButton buyStorerLabelButton = new JFXButton("Million");
 
 		final StackPane sellStackpane = new StackPane();
@@ -394,33 +394,41 @@ public class GameViewController implements Initializable {
 		}
 
 		public void setButtonActions(Resource resource) {
-			sellNumButton.setOnAction(v -> {
 
-				// sell single item
-				if (resource.currentStorageProperty().get() > player.sellResourceIncrementProperty().get()) {
-					resource.currentStorageProperty().set(resource.currentStorageProperty().get() - player.sellResourceIncrementProperty().get());
-					player.addMoney(resource.getMarketValue() * player.sellResourceIncrementProperty().get());
-				}
-			});
-
-
-			buyProducerNumButton.setOnAction(v -> {
-
+			buyProducerButton.setOnAction(v -> {
 				// gives more production to the user
+
 				if (player.ableToSpend(resource.getProducerCost() * player.buyProductionIncrementProperty().get()) == true) {
 					resource.producerCountProperty().set(resource.producerCountProperty().get() + player.buyProductionIncrementProperty().get());
 					player.subtractMoney(resource.getProducerCost() * player.buyProductionIncrementProperty().get());
 				}
+
 			});
 
-			buyStorerNumButton.setOnAction(v -> {
-
+			buyStorerButton.setOnAction(v -> {
 				// gives the user more storage for the resource
+
 				if (player.ableToSpend(resource.getStorerCost() * player.buyStorageIncrementProperty().get()) == true) {
 					resource.maxStorageProperty().set(resource.maxStorageProperty().get() + (resource.getStorageIncrement() * player.buyStorageIncrementProperty().get()));
 					resource.setStorerCount(resource.getStorerCount() + player.buyStorageIncrementProperty().get());
 					player.subtractMoney(resource.getStorerCost() * player.buyStorageIncrementProperty().get());
 				}
+
+			});
+
+			sellButton.setOnAction(v -> {
+				// sell single item
+
+				if (resource.currentStorageProperty().get() > player.sellResourceIncrementProperty().get()) {
+					resource.currentStorageProperty().set(resource.currentStorageProperty().get() - player.sellResourceIncrementProperty().get());
+					player.addMoney(resource.getMarketValue() * player.sellResourceIncrementProperty().get());
+				}
+
+			});
+
+			timerTextButton.setOnAction(v -> {
+				// TODO: Add action for timer button
+
 			});
 
 		}
@@ -434,7 +442,6 @@ public class GameViewController implements Initializable {
 			iconStackPane.setPrefSize(100, 100);
 
 			setupButton(iconImageButton, 14.0, true);
-			iconImageButton.setFont(new Font("System Bold", 14.0));
 			iconImageButton.paddingProperty().setValue(new Insets(0, 0, 1, 0));
 
 			StackPane.setAlignment(iconImageButton, Pos.CENTER);
@@ -461,12 +468,11 @@ public class GameViewController implements Initializable {
 			setupButton(storageTextButton, 16.0, true);
 			storageTextButton.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 			storageTextButton.setAlignment(Pos.BOTTOM_RIGHT);
-			storageTextButton.setPrefWidth(120);
+			//storageTextButton.setMinHeight(50);
 //			storageTextButton.paddingProperty().setValue(new Insets(20, 0, 0, 0));
 
-            setupButton(timerTextButton, 15);
+            setupButton(timerTextButton, 15, true);
             timerTextButton.setPrefSize(110, 40);
-            timerTextButton.setMouseTransparent(true);
             HBox.setMargin(timerTextButton, new Insets(0,0,0,5));
 //          timerTextButton.paddingProperty().setValue(new Insets(3, 0, 2, 0));
 
@@ -486,12 +492,12 @@ public class GameViewController implements Initializable {
 
             // ADDING CHILDREN
 
-            sellStackpane.getChildren().addAll(sellNumButton, sellButton, sellLabelButton);
-            storerStackpane.getChildren().addAll(buyStorerNumButton, buyStorerButton, buyStorerLabelButton);
-            producerStackpane.getChildren().addAll(buyProducerNumButton, buyProducerButton, buyProducerLabelButton);
+            sellStackpane.getChildren().addAll(sellLabelButton, sellNumButton, sellButton);
+            storerStackpane.getChildren().addAll(buyStorerLabelButton, buyStorerNumButton, buyStorerButton);
+            producerStackpane.getChildren().addAll(buyProducerLabelButton, buyProducerNumButton, buyProducerButton);
 			bottomHbox.getChildren().addAll(producerStackpane, storerStackpane, sellStackpane);
 
-			progressBarStackpane.getChildren().addAll(progressBar, progressBarText);
+			progressBarStackpane.getChildren().addAll(progressBar, progressBarText, storageTextButton);
             topHbox.getChildren().addAll(progressBarStackpane, timerTextButton);
             infoContainerVbox.getChildren().addAll(topHbox, bottomHbox);
 
