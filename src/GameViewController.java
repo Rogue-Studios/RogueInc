@@ -295,22 +295,23 @@ public class GameViewController implements Initializable {
 
 		final StackPane producerStackpane = new StackPane();
 		final JFXButton buyProducerButton = new JFXButton("Buy");
-		final JFXButton buyProducerNumButton = new JFXButton("$20");
-		final JFXButton buyProducerLabelButton = new JFXButton("Million");
+		final JFXButton buyProducerNumButton = new JFXButton();
+		final JFXButton buyProducerLabelButton = new JFXButton();
 
 		final StackPane storerStackpane = new StackPane();
 		final JFXButton buyStorerButton = new JFXButton("Buy");
 		final JFXButton buyStorerNumButton = new JFXButton();
-		final JFXButton buyStorerLabelButton = new JFXButton("Million");
+		final JFXButton buyStorerLabelButton = new JFXButton();
 
 		final StackPane sellStackpane = new StackPane();
 		final JFXButton sellButton = new JFXButton("Sell");
-		final JFXButton sellNumButton = new JFXButton("$20");
-		final JFXButton sellLabelButton = new JFXButton("Million");
+		final JFXButton sellNumButton = new JFXButton();
+		final JFXButton sellLabelButton = new JFXButton();
 
 		public ResourceCellv2() {
 			super();
 			setProperties();
+
 		}
 
 		@Override
@@ -321,44 +322,53 @@ public class GameViewController implements Initializable {
 				// Use vbox for cell display
 				setGraphic(containerHbox);
 
-                /*
+                //// UPDATE ICON & PRODUCTION VALUES
 
-                //// UPDATE RESOURCE NAME & PRODUCTION VALUES
-
-                // nameText and productionAmountText will automatically update when the resource's name and producerCount change
-                // UPDATE RESOURCE NAME & PRODUCER TEXT WHEN VALUES CHANGE
-                nameButton.textProperty().bind(resource.nameProperty());
-
-                resource.producerCountProperty().addListener(v -> {
-                    numProducersButton.setText(String.format(resource.producerCountProperty().get() + "x"));
-                });
-
-                numProducersButton.setText("a");
-                numProducersButton.setText(String.format(resource.producerCountProperty().get() + "x"));
-                // productionAmountText.textProperty().bind(resource.producerCountProperty().asString("x" + resource.getMarketValue()));
-                //timerProgressText.textProperty().bind(resource.timeSinceProductionProperty().asString());
-
-                */
+				// still need to create icon code
+                iconNumberButton.textProperty().bind(resource.producerCountProperty().asString());
 
 				// UPDATE TIMER PROGRESSBAR AND TEXT WHEN TIME VALUE CHANGES
 				resource.timeSinceProductionProperty().addListener(v -> {
 					Double timeLeft = resource.getProductionTime() - resource.getTimeSinceProduction();
 					timerTextButton.setText(String.format("%.2f", timeLeft));
 
-	                /*
                     if (resource.getProductionTime() != 0) { // Ensure doesn't divide by 0
-                        timerProgressBar.setProgress(timeLeft / resource.getProductionTime());
+                        progressBar.setProgress(timeLeft / resource.getProductionTime());
                     } else {
                         Main.outputError("Production time = 0. Cannot divide by 0.");
                     }
-                    */
-
-
 				});
 
 				// UPDATE STORAGE PROGRESSBAR AND TEXT WHEN VALUES CHANGE
 				resource.currentStorageProperty().addListener(v -> updateStorageGUI(resource));
 				resource.maxStorageProperty().addListener(v -> updateStorageGUI(resource));
+
+				// UPDATE BUTTON TEXT WHEN VALUES CHANGE
+				player.buyProductionIncrementProperty().addListener(v -> {
+					double cost = resource.getProducerCost() * player.buyProductionIncrementProperty().get();
+					if(cost > 1000) {
+						int length = String.valueOf((int) cost).length();
+						if(length < 7) {
+							buyProducerLabelButton.setText("Thousand");
+							buyProducerNumButton.setText("$" + (int) (cost / 1000));
+						}
+						else if(length < 10) {
+							buyProducerLabelButton.setText("Million");
+							buyProducerNumButton.setText("$" + (int) (cost / 1000000));
+						}
+						else if(length < 13) {
+							buyProducerLabelButton.setText("Billion");
+							buyProducerNumButton.setText("$" + (int) (cost / 1000000000));
+						}
+						else if(length < 16) {
+							buyProducerLabelButton.setText("Trillion");
+							buyProducerNumButton.setText("$" + (int) (cost / 1000000000000L));
+						}
+					}
+					else {
+						buyProducerNumButton.setText("$"  + (int)cost);
+					}
+				});
 
 				// Update values so listeners are called immediately
 				resource.currentStorageProperty().setValue(resource.getCurrentStorage() + 1);
@@ -375,11 +385,8 @@ public class GameViewController implements Initializable {
 
 		}
 
-		private void updateStorageGUI(Resource resource) {
-			//System.out.println("storageText: " + storageText.getText());
-			//System.out.println(resource.currentStorageProperty().getValue());
-			//System.out.println(resource.maxStorageProperty().getValue());
 
+		private void updateStorageGUI(Resource resource) {
 
 			storageTextButton.setText(Integer.toString(resource.getCurrentStorage()) + " / " + resource.getMaxStorage());
 
@@ -394,7 +401,7 @@ public class GameViewController implements Initializable {
 		}
 
 		public void setButtonActions(Resource resource) {
-			sellNumButton.setOnAction(v -> {
+			sellButton.setOnAction(v -> {
 
 				// sell single item
 				if (resource.currentStorageProperty().get() > player.sellResourceIncrementProperty().get()) {
@@ -404,7 +411,7 @@ public class GameViewController implements Initializable {
 			});
 
 
-			buyProducerNumButton.setOnAction(v -> {
+			buyProducerButton.setOnAction(v -> {
 
 				// gives more production to the user
 				if (player.ableToSpend(resource.getProducerCost() * player.buyProductionIncrementProperty().get()) == true) {
@@ -413,7 +420,7 @@ public class GameViewController implements Initializable {
 				}
 			});
 
-			buyStorerNumButton.setOnAction(v -> {
+			buyStorerButton.setOnAction(v -> {
 
 				// gives the user more storage for the resource
 				if (player.ableToSpend(resource.getStorerCost() * player.buyStorageIncrementProperty().get()) == true) {
