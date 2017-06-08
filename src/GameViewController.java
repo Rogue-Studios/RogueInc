@@ -14,10 +14,8 @@ import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.AccessibleRole;
 import javafx.scene.control.Button;
-import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.ListCell;
 import javafx.scene.layout.*;
-import javafx.scene.shape.StrokeType;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
@@ -108,7 +106,7 @@ public class GameViewController implements Initializable {
 	}
 
 	private void setCellFactories() {
-		resourcesListView.setCellFactory(v -> new ResourceCell());
+		resourcesListView.setCellFactory(v -> new ResourceCellv2());
 		productionListView.setCellFactory(null);
 		//researchListView.setCellFactory();
 	}
@@ -162,7 +160,8 @@ public class GameViewController implements Initializable {
 				100
 		);
 
-		resourcesList.addAll(lemons, sugar, apples, bananas, moistureFarm);
+//		resourcesList.addAll(lemons, sugar, apples, bananas, moistureFarm);
+        resourcesList.addAll(lemons, sugar);
 
 		////
 		// Import factories:
@@ -414,50 +413,20 @@ public class GameViewController implements Initializable {
 
 			/// TOP ROW
 
-//			container1Hbox.setMaxHeight(Double.NEGATIVE_INFINITY);
-//			container1Hbox.setMaxWidth(Double.NEGATIVE_INFINITY);
 			container1Hbox.setPrefHeight(100.0);
 			container1Hbox.setPrefWidth(460.0);
 
-//			iconStackPane.setMaxHeight(Double.NEGATIVE_INFINITY);
-//			iconStackPane.setMaxWidth(Double.NEGATIVE_INFINITY);
-//			iconStackPane.setMinHeight(Double.NEGATIVE_INFINITY);
-//			iconStackPane.setMinWidth(Double.NEGATIVE_INFINITY);
 			iconStackPane.setPrefHeight(100.0);
 			iconStackPane.setPrefWidth(100.0);
 
 			setupButton(iconImageButton, 14.0, true);
 			iconImageButton.setText("ICON");
 			iconImageButton.paddingProperty().setValue(new Insets(0, 0, 1, 0));
-			iconStackPane.setAlignment(iconImageButton, Pos.CENTER);
+			StackPane.setAlignment(iconImageButton, Pos.CENTER);
 
 			setupButton(iconNumberButton, 14.0, true);
 			iconNumberButton.setText("100");
-			iconStackPane.setAlignment(iconNumberButton, Pos.BOTTOM_CENTER);
-
-//			iconImageButton.setAccessibleRole(AccessibleRole.TEXT);
-//			iconImageButton.setAlignment(Pos.CENTER);
-//			iconImageButton.setContentDisplay(ContentDisplay.CENTER);
-//			iconImageButton.setEllipsisString("..");
-//			iconImageButton.setFocusTraversable(false);
-//			iconImageButton.setMaxHeight(1.7976931348623157E308);
-//			iconImageButton.setMaxWidth(1.7976931348623157E308);
-
-//			iconNumberButton.setFocusTraversable(false);
-//			iconNumberButton.setMaxWidth(1.7976931348623157E308);
-//			iconNumberButton.setMouseTransparent(true);
-
-//			container2Vbox.setMaxHeight(Double.NEGATIVE_INFINITY);
-//			container2Vbox.setMaxWidth(Double.NEGATIVE_INFINITY);
-//			container2Vbox.setMinHeight(Double.NEGATIVE_INFINITY);
-//			container2Vbox.setMinWidth(Double.NEGATIVE_INFINITY);
-
-
-//			topHbox.setMaxHeight(Double.NEGATIVE_INFINITY);
-//			topHbox.setMaxWidth(Double.NEGATIVE_INFINITY);
-//			topHbox.setMinHeight(Double.NEGATIVE_INFINITY);
-//			topHbox.setMinWidth(Double.NEGATIVE_INFINITY);
-
+			StackPane.setAlignment(iconNumberButton, Pos.BOTTOM_CENTER);
 
 			container2Vbox.prefHeight(100.0);
 			container2Vbox.prefWidth(360.0);
@@ -469,7 +438,7 @@ public class GameViewController implements Initializable {
 			progressBarStackpane.setPrefWidth(240.0);
 
 			progressBar.setProgress(0.7);
-			progressBarStackpane.setMargin(progressBar, new Insets(2, 0, 2, 0));
+			StackPane.setMargin(progressBar, new Insets(2, 0, 2, 0));
 
 			setupText(progressBarText, 16.0, TextAlignment.CENTER);
 			progressBarText.setText("$10");
@@ -480,122 +449,69 @@ public class GameViewController implements Initializable {
 			storageTextButton.setText("10 / 100");
 			storageTextButton.paddingProperty().setValue(new Insets(20, 0, 0, 0));
 
-//			progressBarStackpane.setLayoutX(122.0);
-//			progressBarStackpane.setLayoutY(10.0);
-//			progressBarStackpane.setMaxHeight(Double.NEGATIVE_INFINITY);
-//			progressBarStackpane.setMaxWidth(1.7976931348623157E308);
-//			progressBarStackpane.setMinHeight(Double.NEGATIVE_INFINITY);
-//			progressBarStackpane.setMinWidth(Double.NEGATIVE_INFINITY);
-//			progressBar.setMaxHeight(1.7976931348623157E308);
-//			progressBar.setMaxWidth(1.7976931348623157E308);
+            setupButton(timerTextButton, 15);
+            timerTextButton.setPrefWidth(120.0);
+            timerTextButton.setText("10:11");
+            timerTextButton.paddingProperty().setValue(new Insets(3, 0, 2, 0));
 
-//			storageTextButton.setAccessibleRole(AccessibleRole.TEXT);
-//			storageTextButton.setAlignment(Pos.BOTTOM_RIGHT);
-//			storageTextButton.setContentDisplay(ContentDisplay.CENTER);
-//			storageTextButton.setEllipsisString("..");
-//			storageTextButton.setFocusTraversable(false);
-//			storageTextButton.setMaxHeight(1.7976931348623157E308);
-//			storageTextButton.setMaxWidth(1.7976931348623157E308);
-//			storageTextButton.setMinHeight(Double.NEGATIVE_INFINITY);
-//			storageTextButton.setMinWidth(Double.NEGATIVE_INFINITY);
-//			storageTextButton.setMouseTransparent(true);
-//			storageTextButton.setPrefWidth(120.0);
-//			storageTextButton.setTextAlignment(TextAlignment.CENTER);
+            bottomHbox.prefHeight(50.0);
+            bottomHbox.prefWidth(360.0);
 
-//			timerTextButton.setMaxHeight(1.7976931348623157E308);
-//			timerTextButton.setMaxWidth(Double.NEGATIVE_INFINITY);
+            producerStackpane.setPrefWidth(120.0);
 
-			setupButton(timerTextButton, 15);
-			timerTextButton.setPrefWidth(120.0);
-			timerTextButton.setText("10:11");
-			timerTextButton.paddingProperty().setValue(new Insets(3, 0, 2, 0));
+            setupButton(buyProducerButton, 18, true);
+            buyProducerButton.setText("$20");
+            buyProducerButton.paddingProperty().setValue(new Insets(0, 0, 5, 0));
 
-//			bottomHbox.setMaxHeight(Double.NEGATIVE_INFINITY);
-//			bottomHbox.setMaxWidth(Double.NEGATIVE_INFINITY);
-//			bottomHbox.setMinHeight(Double.NEGATIVE_INFINITY);
-//			bottomHbox.setMinWidth(Double.NEGATIVE_INFINITY);
-//			producerStackpane.setMaxHeight(1.7976931348623157E308);
+            setupButton(buyProducerBuyButton, 13);
+            buyProducerBuyButton.setAlignment(Pos.TOP_LEFT);
+            buyProducerBuyButton.setText("Buy");
+            StackPane.setAlignment(buyProducerBuyButton, Pos.TOP_LEFT);
 
-			bottomHbox.prefHeight(50.0);
-			bottomHbox.prefWidth(360.0);
+            setupButton(buyProducerWordButton, 14);
+            buyProducerWordButton.setAlignment(Pos.BOTTOM_CENTER);
+            buyProducerWordButton.setText("Million");
 
-			producerStackpane.setPrefWidth(120.0);
+            storerStackpane.setPrefWidth(120.0);
 
-			setupButton(buyProducerButton, 18, true);
-			buyProducerButton.setText("$20");
-			buyProducerButton.paddingProperty().setValue(new Insets(0, 0, 5, 0));
+            setupButton(buyStorerButton, 18, true);
+            buyStorerButton.paddingProperty().setValue(new Insets(0, 0, 5, 0));
 
-			setupButton(buyProducerBuyButton, 13);
-			buyProducerBuyButton.setAlignment(Pos.TOP_LEFT);
-			buyProducerBuyButton.setText("Buy");
-			producerStackpane.setAlignment(buyProducerBuyButton, Pos.TOP_LEFT);
+            setupButton(buyStorerBuyButton, 13);
+            buyStorerBuyButton.setAlignment(Pos.TOP_LEFT);
+            buyStorerBuyButton.setText("Buy");
+            StackPane.setAlignment(buyStorerBuyButton, Pos.TOP_LEFT);
 
-			setupButton(buyProducerWordButton, 14);
-			buyProducerWordButton.setAlignment(Pos.BOTTOM_CENTER);
-			buyProducerWordButton.setText("Million");
+            setupButton(buyStorerWordButton, 14);
+            StackPane.setAlignment(buyStorerWordButton, Pos.BOTTOM_CENTER);
+            buyStorerWordButton.setText("Million");
 
-//			storerStackpane.setLayoutX(10.0);
-//			storerStackpane.setLayoutY(10.0);
-//			storerStackpane.setMaxHeight(1.7976931348623157E308);
+            sellStackpane.setPrefWidth(120.0);
 
-			storerStackpane.setPrefWidth(120.0);
+            setupButton(sellButton, 18, true);
+            sellButton.setText("$20");
 
-			setupButton(buyStorerButton, 18, true);
-			buyStorerButton.paddingProperty().setValue(new Insets(0, 0, 5, 0));
+            setupButton(sellSellButton, 13);
+            sellSellButton.setAlignment(Pos.TOP_LEFT);
+            sellSellButton.setText("Sell");
+            StackPane.setAlignment(sellSellButton, Pos.TOP_LEFT);
 
-			setupButton(buyStorerBuyButton, 13);
-			buyStorerBuyButton.setAlignment(Pos.TOP_LEFT);
-			buyStorerBuyButton.setText("Buy");
-			storerStackpane.setAlignment(buyStorerBuyButton, Pos.TOP_LEFT);
+            setupButton(sellWordButton, 14);
+            StackPane.setAlignment(sellWordButton, Pos.BOTTOM_CENTER);
+            sellWordButton.setText("Million");
 
-			setupButton(buyStorerWordButton, 14);
-			storerStackpane.setAlignment(buyStorerWordButton, Pos.BOTTOM_CENTER);
-			buyStorerWordButton.setText("Million");
+            //ADDING CHILDREN
 
-//			buyStorerButton.setAlignment(Pos.CENTER);
-//			buyStorerButton.setFocusTraversable(false);
-//			buyStorerButton.setMaxHeight(1.7976931348623157E308);
-//			buyStorerButton.setMaxWidth(1.7976931348623157E308);
-//			buyStorerButton.setMouseTransparent(true);
+            sellStackpane.getChildren().addAll(sellButton, sellSellButton, sellWordButton);
+            storerStackpane.getChildren().addAll(buyStorerButton, buyStorerBuyButton, buyStorerWordButton);
+            producerStackpane.getChildren().addAll(buyProducerButton, buyProducerBuyButton, buyProducerWordButton);
 
+            bottomHbox.getChildren().addAll(producerStackpane, storerStackpane, sellStackpane);
+            topHbox.getChildren().addAll(progressBarStackpane, timerTextButton);
+            container2Vbox.getChildren().addAll(topHbox, bottomHbox);
 
-//			sellStackpane.setLayoutX(130.0);
-//			sellStackpane.setLayoutY(10.0);
-//			sellStackpane.setMaxHeight(1.7976931348623157E308);
-
-			sellStackpane.setPrefWidth(120.0);
-
-			setupButton(sellButton, 18, true);
-			sellButton.setText("$20");
-
-			setupButton(sellSellButton, 13);
-			sellSellButton.setAlignment(Pos.TOP_LEFT);
-			sellSellButton.setText("Sell");
-			sellStackpane.setAlignment(sellSellButton, Pos.TOP_LEFT);
-
-			setupButton(sellWordButton, 14);
-			sellStackpane.setAlignment(sellWordButton, Pos.BOTTOM_CENTER);
-			sellWordButton.setText("Million");
-
-//			sellButton.setAlignment(Pos.CENTER);
-//			sellButton.setFocusTraversable(false);
-//			sellButton.setMaxHeight(1.7976931348623157E308);
-//			sellButton.setMaxWidth(1.7976931348623157E308);
-//			sellButton.setMouseTransparent(true);
-
-
-			//ADDING CHILDREN
-
-			sellStackpane.getChildren().addAll(sellButton, sellSellButton, sellWordButton);
-			storerStackpane.getChildren().addAll(buyStorerButton, buyStorerBuyButton, buyStorerWordButton);
-			producerStackpane.getChildren().addAll(buyProducerButton, buyProducerBuyButton, buyProducerWordButton);
-
-			bottomHbox.getChildren().addAll(producerStackpane, storerStackpane, sellStackpane);
-			topHbox.getChildren().addAll(progressBarStackpane, timerTextButton);
-			container2Vbox.getChildren().addAll(topHbox, bottomHbox);
-
-			iconStackPane.getChildren().addAll(iconImageButton, iconNumberButton);
-			container1Hbox.getChildren().addAll(iconStackPane, container2Vbox);
+            iconStackPane.getChildren().addAll(iconImageButton, iconNumberButton);
+            container1Hbox.getChildren().addAll(iconStackPane, container2Vbox);
 
 		}
 
@@ -622,6 +538,92 @@ public class GameViewController implements Initializable {
 			button.setMouseTransparent(true);
 		}
 
+        //			container1Hbox.setMaxHeight(Double.NEGATIVE_INFINITY);
+//			container1Hbox.setMaxWidth(Double.NEGATIVE_INFINITY);
+
+
+//			iconStackPane.setMaxHeight(Double.NEGATIVE_INFINITY);
+//			iconStackPane.setMaxWidth(Double.NEGATIVE_INFINITY);
+//			iconStackPane.setMinHeight(Double.NEGATIVE_INFINITY);
+//			iconStackPane.setMinWidth(Double.NEGATIVE_INFINITY);
+
+        //			iconImageButton.setAccessibleRole(AccessibleRole.TEXT);
+//			iconImageButton.setAlignment(Pos.CENTER);
+//			iconImageButton.setContentDisplay(ContentDisplay.CENTER);
+//			iconImageButton.setEllipsisString("..");
+//			iconImageButton.setFocusTraversable(false);
+//			iconImageButton.setMaxHeight(1.7976931348623157E308);
+//			iconImageButton.setMaxWidth(1.7976931348623157E308);
+
+//			iconNumberButton.setFocusTraversable(false);
+//			iconNumberButton.setMaxWidth(1.7976931348623157E308);
+//			iconNumberButton.setMouseTransparent(true);
+
+//			container2Vbox.setMaxHeight(Double.NEGATIVE_INFINITY);
+//			container2Vbox.setMaxWidth(Double.NEGATIVE_INFINITY);
+//			container2Vbox.setMinHeight(Double.NEGATIVE_INFINITY);
+//			container2Vbox.setMinWidth(Double.NEGATIVE_INFINITY);
+
+//			topHbox.setMaxHeight(Double.NEGATIVE_INFINITY);
+//			topHbox.setMaxWidth(Double.NEGATIVE_INFINITY);
+//			topHbox.setMinHeight(Double.NEGATIVE_INFINITY);
+//			topHbox.setMinWidth(Double.NEGATIVE_INFINITY);
+
+//			progressBarStackpane.setLayoutX(122.0);
+//			progressBarStackpane.setLayoutY(10.0);
+//			progressBarStackpane.setMaxHeight(Double.NEGATIVE_INFINITY);
+//			progressBarStackpane.setMaxWidth(1.7976931348623157E308);
+//			progressBarStackpane.setMinHeight(Double.NEGATIVE_INFINITY);
+//			progressBarStackpane.setMinWidth(Double.NEGATIVE_INFINITY);
+//			progressBar.setMaxHeight(1.7976931348623157E308);
+//			progressBar.setMaxWidth(1.7976931348623157E308);
+
+//			storageTextButton.setAccessibleRole(AccessibleRole.TEXT);
+//			storageTextButton.setAlignment(Pos.BOTTOM_RIGHT);
+//			storageTextButton.setContentDisplay(ContentDisplay.CENTER);
+//			storageTextButton.setEllipsisString("..");
+//			storageTextButton.setFocusTraversable(false);
+//			storageTextButton.setMaxHeight(1.7976931348623157E308);
+//			storageTextButton.setMaxWidth(1.7976931348623157E308);
+//			storageTextButton.setMinHeight(Double.NEGATIVE_INFINITY);
+//			storageTextButton.setMinWidth(Double.NEGATIVE_INFINITY);
+//			storageTextButton.setMouseTransparent(true);
+//			storageTextButton.setPrefWidth(120.0);
+//			storageTextButton.setTextAlignment(TextAlignment.CENTER);
+
+//			timerTextButton.setMaxHeight(1.7976931348623157E308);
+//			timerTextButton.setMaxWidth(Double.NEGATIVE_INFINITY);
+
+
+
+//			bottomHbox.setMaxHeight(Double.NEGATIVE_INFINITY);
+//			bottomHbox.setMaxWidth(Double.NEGATIVE_INFINITY);
+//			bottomHbox.setMinHeight(Double.NEGATIVE_INFINITY);
+//			bottomHbox.setMinWidth(Double.NEGATIVE_INFINITY);
+//			producerStackpane.setMaxHeight(1.7976931348623157E308);
+
+//          storerStackpane.setLayoutX(10.0);
+//			storerStackpane.setLayoutY(10.0);
+//			storerStackpane.setMaxHeight(1.7976931348623157E308);
+
+
+
+//			buyStorerButton.setAlignment(Pos.CENTER);
+//			buyStorerButton.setFocusTraversable(false);
+//			buyStorerButton.setMaxHeight(1.7976931348623157E308);
+//			buyStorerButton.setMaxWidth(1.7976931348623157E308);
+//			buyStorerButton.setMouseTransparent(true);
+
+
+//			sellStackpane.setLayoutX(130.0);
+//			sellStackpane.setLayoutY(10.0);
+//			sellStackpane.setMaxHeight(1.7976931348623157E308);
+
+//            sellButton.setAlignment(Pos.CENTER);
+//			sellButton.setFocusTraversable(false);
+//			sellButton.setMaxHeight(1.7976931348623157E308);
+//			sellButton.setMaxWidth(1.7976931348623157E308);
+//			sellButton.setMouseTransparent(true);
 
 	}
 

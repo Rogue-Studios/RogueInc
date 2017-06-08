@@ -1,15 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXProgressBar?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
-
-<fx:root fx:id="container1Hbox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="460.0" type="HBox" xmlns="http://javafx.com/javafx/8.0.112" xmlns:fx="http://javafx.com/fxml/1">
+<?import com.jfoenix.controls.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<fx:root fx:id="container1Hbox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="460.0" type="HBox" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <StackPane fx:id="iconStackPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="100.0">
          <children>
@@ -32,30 +27,27 @@
       </StackPane>
       <VBox fx:id="container2Vbox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="360.0">
          <children>
-            <HBox fx:id="topHbox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="360.0">
+            <HBox fx:id="topHbox" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="360.0">
                <children>
-                  <StackPane fx:id="progressBarStackpane" layoutX="122.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="240.0">
+                  <StackPane fx:id="progressBarStackpane" layoutX="122.0" layoutY="10.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefWidth="240.0">
                      <children>
-                        <JFXProgressBar fx:id="progressBar" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" progress="0.72">
+                        <JFXProgressBar fx:id="progressBar" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" progress="0.72">
                            <StackPane.margin>
-                              <Insets bottom="2.0" top="2.0" />
+                              <Insets />
                            </StackPane.margin>
                         </JFXProgressBar>
-                        <Text fx:id="progressBarText" strokeType="OUTSIDE" strokeWidth="0.0" text="\$10" textAlignment="CENTER" StackPane.alignment="CENTER">
+                        <Text fx:id="progressBarText" strokeType="OUTSIDE" strokeWidth="0.0" text="\$10" textAlignment="CENTER">
                            <font>
                               <Font size="16.0" />
                            </font>
                         </Text>
-                        <JFXButton fx:id="storageTextButton" accessibleRole="TEXT" alignment="BOTTOM_RIGHT" contentDisplay="CENTER" ellipsisString=".." focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mouseTransparent="true" prefWidth="120.0" text="10 / 100" textAlignment="CENTER" StackPane.alignment="CENTER">
+                        <JFXButton fx:id="storageTextButton" accessibleRole="TEXT" alignment="BOTTOM_RIGHT" contentDisplay="CENTER" ellipsisString=".." focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" mouseTransparent="true" prefWidth="120.0" text="10 / 100" textAlignment="CENTER">
                            <font>
                               <Font size="16.0" />
                            </font>
                            <opaqueInsets>
                               <Insets />
                            </opaqueInsets>
-                           <padding>
-                              <Insets top="20.0" />
-                           </padding>
                         </JFXButton>
                      </children>
                      <HBox.margin>
@@ -68,15 +60,23 @@
                      </font>
                   </JFXButton>
                </children>
-               <padding>
-                  <Insets bottom="2.0" top="3.0" />
-               </padding>
+               <VBox.margin>
+                  <Insets bottom="2.0" top="4.0" />
+               </VBox.margin>
             </HBox>
-            <HBox fx:id="bottomHbox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="360.0">
+            <HBox fx:id="bottomHbox" prefHeight="50.0" prefWidth="360.0">
                <children>
-                  <StackPane fx:id="producerStackpane" maxHeight="1.7976931348623157E308" prefWidth="120.0">
+                  <StackPane fx:id="producerStackpane" prefWidth="120.0">
                      <children>
-                        <JFXButton fx:id="buyProducerButton" alignment="CENTER" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mouseTransparent="true" text="\$20" StackPane.alignment="CENTER">
+                        <JFXButton fx:id="buyProducerButton" alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="BUY" textFill="#0dc319">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                           <StackPane.margin>
+                              <Insets />
+                           </StackPane.margin>
+                        </JFXButton>
+                        <JFXButton fx:id="buyProducerNumButton" alignment="TOP_LEFT" focusTraversable="false" mouseTransparent="true" text="\$20">
                            <font>
                               <Font size="18.0" />
                            </font>
@@ -86,7 +86,16 @@
                            <padding>
                               <Insets bottom="5.0" />
                            </padding></JFXButton>
-                        <JFXButton fx:id="buyProducerBuyButton" alignment="TOP_LEFT" text="BUY" textFill="#0dc319" StackPane.alignment="TOP_LEFT">
+                        <JFXButton fx:id="buyProducerLabelButton" focusTraversable="false" mouseTransparent="true" text="MILLION" StackPane.alignment="BOTTOM_CENTER">
+                           <StackPane.margin>
+                              <Insets />
+                           </StackPane.margin>
+                        </JFXButton>
+                     </children>
+                  </StackPane>
+                  <StackPane fx:id="storerStackpane" layoutX="10.0" layoutY="10.0" prefWidth="120.0">
+                     <children>
+                        <JFXButton fx:id="buyStorerButton" alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="BUY" textFill="#ff5e00">
                            <font>
                               <Font size="13.0" />
                            </font>
@@ -94,16 +103,7 @@
                               <Insets />
                            </StackPane.margin>
                         </JFXButton>
-                        <JFXButton fx:id="buyProducerWordButton" text="MILLION" StackPane.alignment="BOTTOM_CENTER">
-                           <StackPane.margin>
-                              <Insets />
-                           </StackPane.margin>
-                        </JFXButton>
-                     </children>
-                  </StackPane>
-                  <StackPane fx:id="storerStackpane" layoutX="10.0" layoutY="10.0" maxHeight="1.7976931348623157E308" prefWidth="120.0">
-                     <children>
-                        <JFXButton fx:id="buyStorerButton" alignment="CENTER" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mouseTransparent="true" text="\$20" StackPane.alignment="CENTER">
+                        <JFXButton fx:id="buyStorerNumButton" alignment="CENTER" focusTraversable="false" mouseTransparent="true" text="\$20">
                            <font>
                               <Font size="18.0" />
                            </font>
@@ -114,7 +114,16 @@
                               <Insets bottom="5.0" />
                            </padding>
                         </JFXButton>
-                        <JFXButton fx:id="buyStorerBuyButton" alignment="TOP_LEFT" text="BUY" textFill="#0dc319" StackPane.alignment="TOP_LEFT">
+                        <JFXButton fx:id="buyStorerLabelButton" focusTraversable="false" mouseTransparent="true" text="MILLION" StackPane.alignment="BOTTOM_CENTER">
+                           <StackPane.margin>
+                              <Insets />
+                           </StackPane.margin>
+                        </JFXButton>
+                     </children>
+                  </StackPane>
+                  <StackPane fx:id="sellStackpane" layoutX="130.0" layoutY="10.0" prefWidth="120.0">
+                     <children>
+                        <JFXButton fx:id="sellButton" alignment="TOP_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="SELL" textFill="#009dff">
                            <font>
                               <Font size="13.0" />
                            </font>
@@ -122,16 +131,7 @@
                               <Insets />
                            </StackPane.margin>
                         </JFXButton>
-                        <JFXButton fx:id="buyStorerWordButton" text="MILLION" StackPane.alignment="BOTTOM_CENTER">
-                           <StackPane.margin>
-                              <Insets />
-                           </StackPane.margin>
-                        </JFXButton>
-                     </children>
-                  </StackPane>
-                  <StackPane fx:id="sellStackpane" layoutX="130.0" layoutY="10.0" maxHeight="1.7976931348623157E308" prefWidth="120.0">
-                     <children>
-                        <JFXButton fx:id="sellButton" alignment="CENTER" focusTraversable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mouseTransparent="true" text="\$20">
+                        <JFXButton fx:id="sellNumButton" alignment="CENTER" focusTraversable="false" mouseTransparent="true" text="\$20">
                            <font>
                               <Font size="18.0" />
                            </font>
@@ -139,15 +139,7 @@
                               <Insets bottom="5.0" />
                            </padding>
                         </JFXButton>
-                        <JFXButton fx:id="sellSellButton" alignment="TOP_LEFT" text="SELL" textFill="#0dc319" StackPane.alignment="TOP_LEFT">
-                           <font>
-                              <Font size="13.0" />
-                           </font>
-                           <StackPane.margin>
-                              <Insets />
-                           </StackPane.margin>
-                        </JFXButton>
-                        <JFXButton fx:id="sellWordButton" text="MILLION" StackPane.alignment="BOTTOM_CENTER">
+                        <JFXButton fx:id="sellLabelButton" focusTraversable="false" mouseTransparent="true" text="MILLION" StackPane.alignment="BOTTOM_CENTER">
                            <StackPane.margin>
                               <Insets />
                            </StackPane.margin>
@@ -156,7 +148,7 @@
                   </StackPane>
                </children>
                <VBox.margin>
-                  <Insets />
+                  <Insets bottom="4.0" top="2.0" />
                </VBox.margin>
             </HBox>
          </children>
