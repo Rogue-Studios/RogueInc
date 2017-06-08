@@ -369,6 +369,58 @@ public class GameViewController implements Initializable {
 					}
 				});
 
+                player.buyStorageIncrementProperty().addListener(v -> {
+                    double cost = resource.getStorerCost() * player.buyStorageIncrementProperty().get();
+                    if(cost > 1000) {
+                        int length = String.valueOf((int) cost).length();
+                        if(length < 7) {
+                            buyStorerLabelButton.setText("Thousand");
+                            buyStorerNumButton.setText("$" + (int) (cost / 1000));
+                        }
+                        else if(length < 10) {
+                            buyStorerLabelButton.setText("Million");
+                            buyStorerNumButton.setText("$" + (int) (cost / 1000000));
+                        }
+                        else if(length < 13) {
+                            buyStorerLabelButton.setText("Billion");
+                            buyStorerNumButton.setText("$" + (int) (cost / 1000000000));
+                        }
+                        else if(length < 16) {
+                            buyStorerLabelButton.setText("Trillion");
+                            buyStorerNumButton.setText("$" + (int) (cost / 1000000000000L));
+                        }
+                    }
+                    else {
+                        buyStorerNumButton.setText("$"  + (int)cost);
+                    }
+                });
+
+                player.sellResourceIncrementProperty().addListener(v -> {
+                    double cost = resource.getMarketValue() * player.sellResourceIncrementProperty().get();
+                    if(cost > 1000) {
+                        int length = String.valueOf((int) cost).length();
+                        if(length < 7) {
+                            sellLabelButton.setText("Thousand");
+                            sellNumButton.setText("$" + (int) (cost / 1000));
+                        }
+                        else if(length < 10) {
+                            sellLabelButton.setText("Million");
+                            sellNumButton.setText("$" + (int) (cost / 1000000));
+                        }
+                        else if(length < 13) {
+                            sellLabelButton.setText("Billion");
+                            sellNumButton.setText("$" + (int) (cost / 1000000000));
+                        }
+                        else if(length < 16) {
+                            sellLabelButton.setText("Trillion");
+                            sellNumButton.setText("$" + (int) (cost / 1000000000000L));
+                        }
+                    }
+                    else {
+                        sellNumButton.setText("$"  + (int)cost);
+                    }
+                });
+
 				// Update values so listeners are called immediately
 				resource.currentStorageProperty().setValue(resource.getCurrentStorage() + 1);
 				resource.currentStorageProperty().setValue(resource.getCurrentStorage() - 1);
