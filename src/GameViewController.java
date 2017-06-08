@@ -257,18 +257,18 @@ public class GameViewController implements Initializable {
 		this.factoryList = factoryList;
 	}
 
-	static class ResourceCell extends ListCell<Resource> {
+	static class ResourceCellv2 extends ListCell<Resource> {
 
 		// CREATES COMPONENTS
 
-		//		final HBox container1Hbox = new HBox();
+		final HBox container1Hbox = new HBox();
 		final VBox container2Vbox = new VBox();
 
 		final StackPane iconStackPane = new StackPane();
 		final JFXButton iconImageButton = new JFXButton("ICON");
 		final JFXButton iconNumberButton = new JFXButton("100");
 
-		//		final HBox topHbox = new HBox();
+		final HBox topHbox = new HBox();
 		final JFXButton storageTextButton = new JFXButton();
 		final Text progressBarText = new Text();
 		final JFXProgressBar progressBar = new JFXProgressBar();
@@ -279,43 +279,21 @@ public class GameViewController implements Initializable {
 		final HBox bottomHbox = new HBox();
 
 		final StackPane producerStackpane = new StackPane();
-		//		final JFXButton buyProducerButton = new JFXButton();
+		final JFXButton buyProducerButton = new JFXButton();
 		final JFXButton buyProducerBuyButton = new JFXButton();
 		final JFXButton buyProducerWordButton = new JFXButton();
 
 		final StackPane storerStackpane = new StackPane();
-		//		final JFXButton buyStorerButton = new JFXButton();
+				final JFXButton buyStorerButton = new JFXButton();
 		final JFXButton buyStorerBuyButton = new JFXButton();
 		final JFXButton buyStorerWordButton = new JFXButton();
 
 		final StackPane sellStackpane = new StackPane();
-		//		final JFXButton sellButton = new JFXButton();
+		final JFXButton sellButton = new JFXButton();
 		final JFXButton sellSellButton = new JFXButton();
 		final JFXButton sellWordButton = new JFXButton();
 
-		/////////
-
-		final VBox vbox = new VBox();
-		final HBox container1Hbox = new HBox();
-		final HBox topHbox = new HBox();
-
-		final JFXButton nameButton = new JFXButton("NAME");
-		final JFXButton numProducersButton = new JFXButton("5");
-		final Pane paneTop = new Pane();
-		final StackPane timerProgressStackpane = new StackPane();
-		final Text timerProgressText = new Text("0");
-		final JFXProgressBar timerProgressBar = new JFXProgressBar();
-
-		final JFXButton sellButton = new JFXButton("SELL ONE");
-		final JFXButton buyProducerButton = new JFXButton("BUY PRODUCER");
-		final JFXButton buyStorerButton = new JFXButton("BUY STORAGE");
-		final Pane paneBottom = new Pane();
-		final StackPane storageProgressStackpane = new StackPane();
-		final Text storageText = new Text("0 / 0");
-		final JFXProgressBar storageProgressBar = new JFXProgressBar();
-
-
-		public ResourceCell() {
+		public ResourceCellv2() {
 			super();
 			setProperties();
 		}
@@ -432,7 +410,7 @@ public class GameViewController implements Initializable {
 
 		}
 
-		private void setPropertiesNew() {
+		private void setProperties() {
 
 			/// TOP ROW
 
@@ -622,69 +600,6 @@ public class GameViewController implements Initializable {
 		}
 
 
-		public void setProperties() {
-
-			setupButton(nameButton, 14.0, 2, 0, 0, 30, 136, false, true);
-			setupButton(numProducersButton, 15.0, 2.0, 0.0, 0.0, 0.0, 55, false, true);
-
-			nameButton.paddingProperty().setValue(new Insets(0, 0, 0, 2));
-			nameButton.setFont(new Font("System Bold", 14.0));
-			numProducersButton.paddingProperty().setValue(new Insets(0, 0, 1, 0));
-			HBox.setHgrow(paneTop, Priority.ALWAYS);
-
-			timerProgressStackpane.setPrefHeight(20.0);
-			timerProgressStackpane.setPrefWidth(200.0);
-			HBox.setMargin(timerProgressStackpane, new Insets(0, 5.0, 0, 0));
-			timerProgressStackpane.setPadding(new Insets(2.0, 0, 3.0, 0));
-			timerProgressBar.setPrefHeight(20.0);
-			//StackPane.setMargin(timerProgressBar, new Insets(0));
-			setupText(timerProgressText, 16.0, 0.0, 0.0, 0.0, 0.0, TextAlignment.CENTER);
-
-
-			container1Hbox.setPrefHeight(25.0);
-			container1Hbox.setPrefWidth(460.0);
-			container1Hbox.setPadding(new Insets(3.0, 0, 2.0, 0));
-
-			timerProgressStackpane.getChildren().addAll(timerProgressBar, timerProgressText);
-			container1Hbox.getChildren().addAll(nameButton, numProducersButton, paneTop, timerProgressStackpane);
-
-			/// BOTTOM ROW
-
-			setupButton(sellButton);
-			setupButton(buyProducerButton);
-			setupButton(buyStorerButton);
-
-			sellButton.setPrefWidth(60);
-			buyProducerButton.setPrefWidth(87);
-			buyStorerButton.setPrefWidth(80);
-			HBox.setHgrow(paneBottom, Priority.ALWAYS);
-
-			storageProgressStackpane.setPrefHeight(20.0);
-			storageProgressStackpane.setPrefWidth(120.0);
-			HBox.setMargin(storageProgressStackpane, new Insets(0, 5, 0, 0));
-			storageProgressBar.setPrefHeight(20.0);
-			//StackPane.setMargin(storageProgressBar, new Insets(0));
-
-			setupText(storageText, 15.0, 0.0, 0.0, 0.0, 0.0, TextAlignment.CENTER);
-			StackPane.setMargin(storageText, new Insets(0, 0, 0, 0));
-			StackPane.setAlignment(storageText, Pos.CENTER);
-
-
-			topHbox.setPrefHeight(25.0);
-			topHbox.setPrefWidth(460.0);
-			topHbox.setPadding(new Insets(2.0, 0, 3.0, 0));
-
-			storageProgressStackpane.getChildren().addAll(storageProgressBar, storageText);
-			topHbox.getChildren().addAll(sellButton, buyProducerButton, buyStorerButton, paneBottom, storageProgressStackpane);
-
-
-			vbox.setPrefWidth(460.0);
-			vbox.setPrefHeight(50.0);
-			vbox.getChildren().addAll(container1Hbox, topHbox);
-
-
-		}
-
 		private static void setupText(Text text, double fontSize, TextAlignment alignment) {
 			text.setTextAlignment(alignment);
 			text.setTextOrigin(VPos.CENTER);
@@ -707,10 +622,240 @@ public class GameViewController implements Initializable {
 			button.setMouseTransparent(true);
 		}
 
-		public static void setupButton(Button button, double fontSize, double top, double right, double bottom, double left, TextAlignment textAlignment) {
+
+	}
+
+	static class ResourceCell extends ListCell<Resource> {
+
+		final VBox vbox = new VBox();
+		final HBox hbox1 = new HBox();
+		final HBox hbox2 = new HBox();
+
+		final JFXButton nameButton = new JFXButton("NAME");
+		final JFXButton numProducersButton = new JFXButton("5");
+		final Pane paneTop = new Pane();
+		final StackPane timerProgressStackpane = new StackPane();
+		final Text timerProgressText = new Text("0");
+		final JFXProgressBar timerProgressBar = new JFXProgressBar();
+
+		final JFXButton sellOneButton = new JFXButton("SELL ONE");
+		final JFXButton sellAllButton = new JFXButton("SELL ALL");
+		final JFXButton buyProducerButton = new JFXButton("BUY PRODUCER");
+		final JFXButton buyStorerButton = new JFXButton("BUY STORAGE");
+		final Pane paneBottom = new Pane();
+		final StackPane storageProgressStackpane = new StackPane();
+		final Text storageText = new Text("0 / 0");
+		final JFXProgressBar storageProgressBar = new JFXProgressBar();
+
+
+		public ResourceCell() {
+			super();
+			setProperties();
+		}
+
+		@Override
+		public void updateItem(Resource resource, boolean empty) {
+			super.updateItem(resource, empty);
+
+			if (resource != null) {
+				// Use vbox for cell display
+				setGraphic(vbox);
+
+				//// UPDATE RESOURCE NAME & PRODUCTION VALUES
+
+				// nameText and productionAmountText will automatically update when the resource's name and producerCount change
+				// UPDATE RESOURCE NAME & PRODUCER TEXT WHEN VALUES CHANGE
+				nameButton.textProperty().bind(resource.nameProperty());
+
+				resource.producerCountProperty().addListener(v -> {
+					numProducersButton.setText(String.format(resource.producerCountProperty().get() + "x"));
+				});
+
+				numProducersButton.setText("a");
+				numProducersButton.setText(String.format(resource.producerCountProperty().get() + "x"));
+				// productionAmountText.textProperty().bind(resource.producerCountProperty().asString("x" + resource.getMarketValue()));
+				//timerProgressText.textProperty().bind(resource.timeSinceProductionProperty().asString());
+
+				// UPDATE TIMER PROGRESSBAR AND TEXT WHEN TIME VALUE CHANGES
+				resource.timeSinceProductionProperty().addListener(v -> {
+					Double timeLeft = resource.getProductionTime() - resource.getTimeSinceProduction();
+					timerProgressText.setText(String.format("%.2f", timeLeft));
+
+					if (resource.getProductionTime() != 0) { // Ensure doesn't divide by 0
+						timerProgressBar.setProgress(timeLeft / resource.getProductionTime());
+					} else {
+						Main.outputError("Production time = 0. Cannot divide by 0.");
+					}
+
+				});
+
+				// UPDATE STORAGE PROGRESSBAR AND TEXT WHEN VALUES CHANGE
+				resource.currentStorageProperty().addListener(v -> updateStorageGUI(resource));
+				resource.maxStorageProperty().addListener(v -> updateStorageGUI(resource));
+
+				// Update values so listeners are called immediately
+				resource.currentStorageProperty().setValue(resource.getCurrentStorage() + 1);
+				resource.currentStorageProperty().setValue(resource.getCurrentStorage() - 1);
+
+				resource.timeSinceProductionProperty().setValue(resource.getTimeSinceProduction() + 1);
+				resource.timeSinceProductionProperty().setValue(resource.getTimeSinceProduction() - 1);
+
+				setButtonActions(resource);
+
+				// if(!nameButton.textProperty().isBound()) {}
+				// NOTE: adding the conditional above could improve efficiency
+			}
 
 		}
+
+		private void updateStorageGUI(Resource resource) {
+			//System.out.println("storageText: " + storageText.getText());
+			//System.out.println(resource.currentStorageProperty().getValue());
+			//System.out.println(resource.maxStorageProperty().getValue());
+			storageText.setText(Integer.toString(resource.getCurrentStorage()) + " / " + resource.getMaxStorage());
+
+			if (resource.getMaxStorage() != 0) { // Ensure doesn't divide by 0
+				storageProgressBar.setProgress((double) resource.getCurrentStorage() / (double) resource.getMaxStorage());
+			} else {
+				Main.outputError("Max storage = 0. Cannot divide by 0.");
+			}
+		}
+
+		public void setButtonActions(Resource resource) {
+			sellOneButton.setOnAction(v -> {
+
+				// sell single item
+				if (resource.currentStorageProperty().get() > 0) {
+					resource.currentStorageProperty().set(resource.currentStorageProperty().get() - 1);
+					player.addMoney(resource.getMarketValue());
+				}
+			});
+
+			sellAllButton.setOnAction(v -> {
+
+				// sell all items
+				if (resource.currentStorageProperty().get() > 0) {
+					double totalValue;
+					totalValue = resource.getMarketValue() * resource.currentStorageProperty().get();
+					resource.currentStorageProperty().set(0);
+					player.addMoney(totalValue);
+				}
+			});
+
+			buyProducerButton.setOnAction(v -> {
+
+				// gives more production to the user
+				if (player.ableToSpend(resource.getProducerCost()) == true) {
+					resource.producerCountProperty().set(resource.producerCountProperty().get() + 1);
+					player.subtractMoney(resource.getProducerCost());
+				}
+			});
+
+			buyStorerButton.setOnAction(v -> {
+
+				// gives the user more storage for the resource
+				if (player.ableToSpend(resource.getStorerCost()) == true) {
+					resource.maxStorageProperty().set(resource.maxStorageProperty().get() + resource.getStorageIncrement());
+					resource.setStorerCount(resource.getStorerCount() + 1);
+					player.subtractMoney(resource.getStorerCost());
+				}
+			});
+		}
+
+		private void setProperties() {
+
+			/// TOP ROW
+
+			setupButton(nameButton, 14.0, 2, 0, 0, 30, 136, false, true);
+			setupButton(numProducersButton, 15.0, 2.0, 0.0, 0.0, 0.0, 55, false, true);
+
+			nameButton.paddingProperty().setValue(new Insets(0, 0, 0, 2));
+			nameButton.setFont(new Font("System Bold", 14.0));
+			numProducersButton.paddingProperty().setValue(new Insets(0, 0, 1, 0));
+			HBox.setHgrow(paneTop, Priority.ALWAYS);
+
+			timerProgressStackpane.setPrefHeight(20.0);
+			timerProgressStackpane.setPrefWidth(200.0);
+			HBox.setMargin(timerProgressStackpane, new Insets(0, 5.0, 0, 0));
+			timerProgressStackpane.setPadding(new Insets(2.0, 0, 3.0, 0));
+			timerProgressBar.setPrefHeight(20.0);
+			//StackPane.setMargin(timerProgressBar, new Insets(0));
+			setupText(timerProgressText, 16.0, 0.0, 0.0, 0.0, 0.0, TextAlignment.CENTER);
+
+
+			hbox1.setPrefHeight(25.0);
+			hbox1.setPrefWidth(460.0);
+			hbox1.setPadding(new Insets(3.0, 0, 2.0, 0));
+
+			timerProgressStackpane.getChildren().addAll(timerProgressBar, timerProgressText);
+			hbox1.getChildren().addAll(nameButton, numProducersButton, paneTop, timerProgressStackpane);
+
+			/// BOTTOM ROW
+
+			setupButton(sellOneButton);
+			setupButton(sellAllButton);
+			setupButton(buyProducerButton);
+			setupButton(buyStorerButton);
+
+			sellOneButton.setPrefWidth(60);
+			sellAllButton.setPrefWidth(60);
+			buyProducerButton.setPrefWidth(87);
+			buyStorerButton.setPrefWidth(80);
+			HBox.setHgrow(paneBottom, Priority.ALWAYS);
+
+			storageProgressStackpane.setPrefHeight(20.0);
+			storageProgressStackpane.setPrefWidth(120.0);
+			HBox.setMargin(storageProgressStackpane, new Insets(0, 5, 0, 0));
+			storageProgressBar.setPrefHeight(20.0);
+			//StackPane.setMargin(storageProgressBar, new Insets(0));
+
+			setupText(storageText, 15.0, 0.0, 0.0, 0.0, 0.0, TextAlignment.CENTER);
+			StackPane.setMargin(storageText, new Insets(0, 0, 0, 0));
+			StackPane.setAlignment(storageText, Pos.CENTER);
+
+
+			hbox2.setPrefHeight(25.0);
+			hbox2.setPrefWidth(460.0);
+			hbox2.setPadding(new Insets(2.0, 0, 3.0, 0));
+
+			storageProgressStackpane.getChildren().addAll(storageProgressBar, storageText);
+			hbox2.getChildren().addAll(sellOneButton, sellAllButton, buyProducerButton, buyStorerButton, paneBottom, storageProgressStackpane);
+
+
+			vbox.setPrefWidth(460.0);
+			vbox.setPrefHeight(50.0);
+			vbox.getChildren().addAll(hbox1, hbox2);
+		}
+
+		private static void setupText(Text text, double fontSize, double top, double right, double bottom, double left, TextAlignment alignment) {
+			text.setTextAlignment(alignment);
+			text.setTextOrigin(VPos.CENTER);
+			text.setFont(new Font(fontSize));
+			HBox.setMargin(text, new Insets(top, right, bottom, left));
+		}
+
+		private static void setupButton(Button button) {
+			button.setAlignment(Pos.CENTER);
+			//button.setContentDisplay(ContentDisplay.CENTER);
+			//button.setPrefSize(25.0, 25.0);
+			button.setTextAlignment(TextAlignment.CENTER);
+			button.setFocusTraversable(false);
+			button.setEllipsisString("..");
+			button.setFont(new Font(10.0));
+			HBox.setMargin(button, new Insets(0, 2, 0, 2));
+		}
+
+		public static void setupButton(Button button, double fontSize, double top, double right, double bottom, double left, double prefWidth, boolean focusTraversable, boolean mouseTransparent) {
+			button.setAlignment(Pos.CENTER);
+			button.setTextAlignment(TextAlignment.CENTER);
+			button.setFocusTraversable(false);
+			button.setEllipsisString("..");
+			button.setFont(new Font(fontSize));
+			HBox.setMargin(button, new Insets(top, right, bottom, left));
+			button.setPrefWidth(prefWidth);
+			button.setFocusTraversable(focusTraversable);
+			button.setMouseTransparent(mouseTransparent);
+		}
+
 	}
 }
-
-
