@@ -311,7 +311,6 @@ public class GameViewController implements Initializable {
 		public ResourceCellv2() {
 			super();
 			setProperties();
-
 		}
 
 		@Override
@@ -441,7 +440,6 @@ public class GameViewController implements Initializable {
 			iconStackPane.setPrefSize(100, 100);
 
 			setupButton(iconImageButton, 14.0, true);
-			iconImageButton.setFont(new Font("System Bold", 14.0));
 			iconImageButton.paddingProperty().setValue(new Insets(0, 0, 1, 0));
 
 			StackPane.setAlignment(iconImageButton, Pos.CENTER);
@@ -468,12 +466,11 @@ public class GameViewController implements Initializable {
 			setupButton(storageTextButton, 16.0, true);
 			storageTextButton.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 			storageTextButton.setAlignment(Pos.BOTTOM_RIGHT);
-			storageTextButton.setPrefWidth(120);
+			//storageTextButton.setMinHeight(50);
 //			storageTextButton.paddingProperty().setValue(new Insets(20, 0, 0, 0));
 
-            setupButton(timerTextButton, 15);
+            setupButton(timerTextButton, 15, true);
             timerTextButton.setPrefSize(110, 40);
-            timerTextButton.setMouseTransparent(true);
             HBox.setMargin(timerTextButton, new Insets(0,0,0,5));
 //          timerTextButton.paddingProperty().setValue(new Insets(3, 0, 2, 0));
 
@@ -493,12 +490,12 @@ public class GameViewController implements Initializable {
 
             // ADDING CHILDREN
 
-            sellStackpane.getChildren().addAll(sellNumButton, sellButton, sellLabelButton);
-            storerStackpane.getChildren().addAll(buyStorerNumButton, buyStorerButton, buyStorerLabelButton);
-            producerStackpane.getChildren().addAll(buyProducerNumButton, buyProducerButton, buyProducerLabelButton);
+            sellStackpane.getChildren().addAll(sellLabelButton, sellNumButton, sellButton);
+            storerStackpane.getChildren().addAll(buyStorerLabelButton, buyStorerNumButton, buyStorerButton);
+            producerStackpane.getChildren().addAll(buyProducerLabelButton, buyProducerNumButton, buyProducerButton);
 			bottomHbox.getChildren().addAll(producerStackpane, storerStackpane, sellStackpane);
 
-			progressBarStackpane.getChildren().addAll(progressBar, progressBarText);
+			progressBarStackpane.getChildren().addAll(progressBar, progressBarText, storageTextButton);
             topHbox.getChildren().addAll(progressBarStackpane, timerTextButton);
             infoContainerVbox.getChildren().addAll(topHbox, bottomHbox);
 
