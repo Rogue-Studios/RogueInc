@@ -90,15 +90,30 @@ public class GameViewController implements Initializable {
 
 		balanceButton.textProperty().bind(player.getBalance().asString("$%.0f"));
 		player.buyProductionIncrementProperty().addListener(v -> {
-			buyProductionIncrementButton.setText(String.format("buy prod"));
+			if(player.buyProductionIncrementProperty().get() == -1) {
+				buyProductionIncrementButton.setText(String.format("Max"));
+			}
+			else {
+				buyProductionIncrementButton.setText(String.format("x" + player.buyProductionIncrementProperty().get()));
+			}
 		});
 
-		player.buyProductionIncrementProperty().addListener(v -> {
-			buyStorageIncrementButton.setText(String.format("buy stor"));
+		player.buyStorageIncrementProperty().addListener(v -> {
+			if(player.buyStorageIncrementProperty().get() == -1) {
+				buyStorageIncrementButton.setText(String.format("Max"));
+			}
+			else {
+				buyStorageIncrementButton.setText(String.format("x" + player.buyStorageIncrementProperty().get()));
+			}
 		});
 
-		player.buyProductionIncrementProperty().addListener(v -> {
-			sellIncrementButton.setText(String.format("sell"));
+		player.sellResourceIncrementProperty().addListener(v -> {
+			if(player.sellResourceIncrementProperty().get() == -1) {
+				sellIncrementButton.setText(String.format("Max"));
+			}
+			else {
+				sellIncrementButton.setText(String.format("x" + player.sellResourceIncrementProperty().get()));
+			}
 		});
 
 		importData();
@@ -451,6 +466,7 @@ public class GameViewController implements Initializable {
 
             setupButton(timerTextButton, 15);
             timerTextButton.setPrefSize(110, 40);
+            timerTextButton.setMouseTransparent(true);
             HBox.setMargin(timerTextButton, new Insets(0,0,0,5));
 //          timerTextButton.paddingProperty().setValue(new Insets(3, 0, 2, 0));
 
