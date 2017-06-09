@@ -16,6 +16,7 @@ import javafx.scene.AccessibleRole;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListCell;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
@@ -536,12 +537,15 @@ public class GameViewController implements Initializable {
 
             producerStackpane.setPrefWidth(120.0);
             setupKeyActionButtons(buyProducerButton, buyProducerNumButton, buyProducerLabelButton);
+            buyProducerButton.setTextFill(Color.web("#2ecc71"));
 
             storerStackpane.setPrefWidth(120.0);
             setupKeyActionButtons(buyStorerButton, buyStorerNumButton, buyStorerLabelButton);
+			buyStorerButton.setTextFill(Color.web("#e67e22"));
 
             sellStackpane.setPrefWidth(120.0);
             setupKeyActionButtons(sellButton, sellNumButton, sellLabelButton);
+			sellButton.setTextFill(Color.web("#3498db"));
 
             // ADDING CHILDREN
 
