@@ -342,6 +342,10 @@ public class GameViewController implements Initializable {
 				resource.currentStorageProperty().addListener(v -> updateStorageGUI(resource));
 				resource.maxStorageProperty().addListener(v -> updateStorageGUI(resource));
 
+				buyProducerNumButton.setText("$" + (int) resource.getProducerCost());
+				buyStorerNumButton.setText("$" + (int) resource.getStorerCost());
+				sellNumButton.setText("$" + (int) resource.getMarketValue());
+
 				// UPDATE BUTTON TEXT WHEN VALUES CHANGE
 				player.buyProductionIncrementProperty().addListener(v -> {
 					double cost = resource.getProducerCost() * player.buyProductionIncrementProperty().get();
@@ -435,7 +439,6 @@ public class GameViewController implements Initializable {
 			}
 
 		}
-
 
 		private void updateStorageGUI(Resource resource) {
 
