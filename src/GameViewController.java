@@ -53,7 +53,7 @@ public class GameViewController implements Initializable {
 	//private private ObservableList<Research> researchList;
 
 	public GameViewController() {
-		player = new User(100);
+		player = new User(100000);
 	}
 
 	public void start() {
@@ -456,34 +456,10 @@ public class GameViewController implements Initializable {
 		}
 
 		public void setButtonActions(Resource resource) {
-			sellButton.setOnAction(v -> {
 
-				// sell single item
-				if (resource.currentStorageProperty().get() >= player.sellResourceIncrementProperty().get()) {
-					resource.currentStorageProperty().set(resource.currentStorageProperty().get() - player.sellResourceIncrementProperty().get());
-					player.addMoney(resource.getMarketValue() * player.sellResourceIncrementProperty().get());
-				}
-			});
-
-
-			buyProducerButton.setOnAction(v -> {
-
-				// gives more production to the user
-				if (player.ableToSpend(resource.getProducerCost() * player.buyProductionIncrementProperty().get()) == true) {
-					resource.producerCountProperty().set(resource.producerCountProperty().get() + player.buyProductionIncrementProperty().get());
-					player.subtractMoney(resource.getProducerCost() * player.buyProductionIncrementProperty().get());
-				}
-			});
-
-			buyStorerButton.setOnAction(v -> {
-
-				// gives the user more storage for the resource
-				if (player.ableToSpend(resource.getStorerCost() * player.buyStorageIncrementProperty().get()) == true) {
-					resource.maxStorageProperty().set(resource.maxStorageProperty().get() + (resource.getStorageIncrement() * player.buyStorageIncrementProperty().get()));
-					resource.setStorerCount(resource.getStorerCount() + player.buyStorageIncrementProperty().get());
-					player.subtractMoney(resource.getStorerCost() * player.buyStorageIncrementProperty().get());
-				}
-			});
+			buyProducerButton.setOnAction(v -> player.buyProducer(resource));
+			buyStorerButton.setOnAction(v -> player.buyStorer(resource));
+			sellButton.setOnAction(v -> player.sell(resource));
 
 		}
 
@@ -721,7 +697,7 @@ public class GameViewController implements Initializable {
 			buyProducerButton.setOnAction(v -> {
 
 				// gives more production to the user
-				if (player.ableToSpend(resource.getProducerCost()) == true) {
+				if (player.isAbleToSpend(resource.getProducerCost()) == true) {
 					resource.producerCountProperty().set(resource.producerCountProperty().get() + 1);
 					player.subtractMoney(resource.getProducerCost());
 				}
@@ -730,7 +706,7 @@ public class GameViewController implements Initializable {
 			buyStorerButton.setOnAction(v -> {
 
 				// gives the user more storage for the resource
-				if (player.ableToSpend(resource.getStorerCost()) == true) {
+				if (player.isAbleToSpend(resource.getStorerCost()) == true) {
 					resource.maxStorageProperty().set(resource.maxStorageProperty().get() + resource.getStorageIncrement());
 					resource.setStorerCount(resource.getStorerCount() + 1);
 					player.subtractMoney(resource.getStorerCost());

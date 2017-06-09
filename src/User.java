@@ -34,13 +34,33 @@ public class User {
         this.sellResourceIncrement.setValue(1);
     }
 
-    public boolean ableToSpend(double money) {
-        if(money <= balance.get()) {
-            return true;
+    public void buyProducer(Resource resource) {
+		// gives more production to the user if they can afford it
+		if (isAbleToSpend(resource.getProducerCost() * buyProductionIncrementProperty().get())) {
+			resource.producerCountProperty().set(resource.producerCountProperty().get() + buyProductionIncrementProperty().get());
+			subtractMoney(resource.getProducerCost() * buyProductionIncrementProperty().get());
+		}
+	}
+
+    public void buyStorer(Resource resource) {
+        // gives the user more storage for the resource if user can afford it
+        if (isAbleToSpend(resource.getStorerCost() * buyStorageIncrementProperty().get())) {
+            resource.maxStorageProperty().set(resource.maxStorageProperty().get() + (resource.getStorageIncrement() * buyStorageIncrementProperty().get()));
+            resource.setStorerCount(resource.getStorerCount() + buyStorageIncrementProperty().get());
+            subtractMoney(resource.getStorerCost() * buyStorageIncrementProperty().get());
         }
-        else {
-            return false;
-        }
+    }
+
+    public void sell(Resource resource) {
+		// sell single item if user has enough items
+		if (resource.currentStorageProperty().get() >= sellResourceIncrementProperty().get()) {
+			resource.currentStorageProperty().set(resource.currentStorageProperty().get() - sellResourceIncrementProperty().get());
+			addMoney(resource.getMarketValue() * sellResourceIncrementProperty().get());
+		}
+	}
+
+    public boolean isAbleToSpend(double money) {
+		return money <= balance.get();
     }
 
     public void addMoney(double money) {
