@@ -35,7 +35,7 @@ public class User {
     }
 
     public boolean ableToSpend(double money) {
-        if(money < balance.get()) {
+        if(money <= balance.get()) {
             return true;
         }
         else {

@@ -52,7 +52,7 @@ public class GameViewController implements Initializable {
 	//private private ObservableList<Research> researchList;
 
 	public GameViewController() {
-		player = new User(100000000);
+		player = new User(100);
 	}
 
 	public void start() {
@@ -332,7 +332,7 @@ public class GameViewController implements Initializable {
 					timerTextButton.setText(String.format("%.2f", timeLeft));
 
                     if (resource.getProductionTime() != 0) { // Ensure doesn't divide by 0
-                        progressBar.setProgress(timeLeft / resource.getProductionTime());
+                        progressBar.setProgress(resource.getTimeSinceProduction() / resource.getProductionTime());
                     } else {
                         Main.outputError("Production time = 0. Cannot divide by 0.");
                     }
@@ -458,7 +458,7 @@ public class GameViewController implements Initializable {
 			sellButton.setOnAction(v -> {
 
 				// sell single item
-				if (resource.currentStorageProperty().get() > player.sellResourceIncrementProperty().get()) {
+				if (resource.currentStorageProperty().get() >= player.sellResourceIncrementProperty().get()) {
 					resource.currentStorageProperty().set(resource.currentStorageProperty().get() - player.sellResourceIncrementProperty().get());
 					player.addMoney(resource.getMarketValue() * player.sellResourceIncrementProperty().get());
 				}
