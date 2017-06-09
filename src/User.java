@@ -13,8 +13,6 @@ public class User {
     private double lifetimeSpending;
     private int totalResourcesProduced;
 
-
-
     private IntegerProperty buyProductionIncrement;
     private IntegerProperty buyStorageIncrement;
     private IntegerProperty sellResourceIncrement;
@@ -32,7 +30,11 @@ public class User {
         this.buyStorageIncrement.setValue(1);
         this.sellResourceIncrement = new SimpleIntegerProperty();
         this.sellResourceIncrement.setValue(1);
+		
+
     }
+
+
 
     public double calculateMaxToFillStorage(Resource resource) {
     	double cost = 0;
@@ -87,26 +89,41 @@ public class User {
 
     public void buyProducer(Resource resource) {
 		// gives more production to the user if they can afford it
-		if (isAbleToSpend(resource.getProducerCost() * buyProductionIncrementProperty().get())) {
-			resource.producerCountProperty().set(resource.producerCountProperty().get() + buyProductionIncrementProperty().get());
-			subtractMoney(resource.getProducerCost() * buyProductionIncrementProperty().get());
+		if (isAbleToSpend(resource.getBuyProducerValue())) {
+			resource.producerCountProperty().setValue(resource.producerCountProperty().getValue() + resource.getBuyProducerQuantity());
+			subtractMoney(resource.getBuyProducerValue());
+			
+//			subtractMoney(resource.getProducerCost() * buyProductionIncrementProperty().get());
+//			resource.producerCountProperty().set(resource.producerCountProperty().get() + buyProductionIncrementProperty().get());
 		}
 	}
 
     public void buyStorer(Resource resource) {
         // gives the user more storage for the resource if user can afford it
-        if (isAbleToSpend(resource.getStorerCost() * buyStorageIncrementProperty().get())) {
-            resource.maxStorageProperty().set(resource.maxStorageProperty().get() + (resource.getStorageIncrement() * buyStorageIncrementProperty().get()));
-            resource.setStorerCount(resource.getStorerCount() + buyStorageIncrementProperty().get());
-            subtractMoney(resource.getStorerCost() * buyStorageIncrementProperty().get());
+        if (isAbleToSpend(resource.getBuyStorerValue())) {
+        	resource.maxStorageProperty().setValue(resource.getMaxStorage() + resource.getBuyStorerQuantity());
+        	//resource.setStorerCount(resource.getStorerCount());
+			subtractMoney(resource.getBuyStorerValue());
+        	
+//            resource.maxStorageProperty().set(resource.maxStorageProperty().get() + (resource.getStorageIncrement() * buyStorageIncrementProperty().get()));
+//            resource.setStorerCount(resource.getStorerCount() + buyStorageIncrementProperty().get());
+//            subtractMoney(resource.getStorerCost() * buyStorageIncrementProperty().get());
         }
     }
 
     public void sell(Resource resource) {
 		// sell single item if user has enough items
-		if (resource.currentStorageProperty().get() >= sellResourceIncrementProperty().get()) {
-			resource.currentStorageProperty().set(resource.currentStorageProperty().get() - sellResourceIncrementProperty().get());
-			addMoney(resource.getMarketValue() * sellResourceIncrementProperty().get());
+		if (resource.currentStorageProperty().get() >= resource.getSellQuantity()) {
+			
+			double money = resource.sellValueProperty().getValue();
+			
+			
+			resource.currentStorageProperty().setValue(resource.currentStorageProperty().getValue() - resource.sellQuantityProperty().getValue());
+
+			addMoney(money);
+		
+//			resource.currentStorageProperty().set(resource.currentStorageProperty().get() - sellResourceIncrementProperty().get());
+//			addMoney(resource.getMarketValue() * sellResourceIncrementProperty().get());
 		}
 	}
 

@@ -343,6 +343,9 @@ public class GameViewController implements Initializable {
 				// UPDATE STORAGE TEXT WHEN VALUES CHANGE
 				resource.currentStorageProperty().addListener(v -> {
 					storageTextButton.setText(Integer.toString(resource.getCurrentStorage()) + " / " + resource.getMaxStorage());
+					
+					updateSellValues(resource);
+					
 				});
 
 				resource.maxStorageProperty().addListener(v -> {
@@ -354,44 +357,40 @@ public class GameViewController implements Initializable {
 				buyProducerNumButton.setText("$" + (int) resource.getProducerCost());
 				buyStorerNumButton.setText("$" + (int) resource.getStorerCost());
 				sellNumButton.setText("$" + (int) resource.getMarketValue());
-
+				
+				
 				// UPDATE BUTTON TEXT WHEN VALUES CHANGE
 				player.buyProductionIncrementProperty().addListener(v -> {
-					double cost = 0;
-
-					if(player.buyProductionIncrementProperty().get() == -1) {
-						cost = player.calculateMaxCost(resource, resource.getProducerCost());
-
-					} else {
-						cost = resource.getProducerCost() * player.buyProductionIncrementProperty().get();
-
-					}
-
-					setNumberEndings(cost, buyProducerLabelButton, buyProducerNumButton);
-
+					updateBuyProducerValues(resource);
+				
+					
 				});
-
+				
                 player.buyStorageIncrementProperty().addListener(v -> {
+	
+                	updateBuyStorerValues(resource);
+	
+//					double cost = 0;
+//					if(player.buyStorageIncrementProperty().get() == -1) {
+////						cost = player.calculateMaxCost(resource, resource.getStorerCost());
+//
+//					} else {
+//						cost = resource.getStorerCost() * player.buyStorageIncrementProperty().get();
+//
+//					}
 
-					double cost = 0;
-
-					if(player.buyStorageIncrementProperty().get() == -1) {
-						cost = player.calculateMaxCost(resource, resource.getStorerCost());
-
-					} else {
-						cost = resource.getStorerCost() * player.buyStorageIncrementProperty().get();
-
-					}
-
-					setNumberEndings(cost, buyStorerLabelButton, buyStorerNumButton);
 
                 });
 
                 player.sellResourceIncrementProperty().addListener(v -> {
+					updateSellValues(resource);
+                	/*
+                	
+                	 
                     double cost = 0;
 
 					if(player.sellResourceIncrementProperty().get() == -1) {
-						cost = player.calculateMaxSell(resource, resource.getMarketValue());
+//						cost = player.calculateMaxSell(resource, resource.getMarketValue());
 
 					} else {
 						cost = resource.getMarketValue() * player.sellResourceIncrementProperty().get();
@@ -399,8 +398,17 @@ public class GameViewController implements Initializable {
 					}
 
                     setNumberEndings(cost, sellLabelButton, sellNumButton);
-
+                    
+                    */
+                	
                 });
+				
+				player.getBalance().addListener(v -> {
+					updateBuyProducerValues(resource);
+					
+					updateBuyStorerValues(resource);
+					
+				});
 
 				// Update values so listeners are called immediately
 
@@ -416,6 +424,27 @@ public class GameViewController implements Initializable {
 				// NOTE: adding the conditional above could improve efficiency
 			}
 
+		}
+		
+		private void updateBuyProducerValues(Resource resource) {
+			resource.updateQuantitiyAndValue(player, resource.getProducerCost(),false,  player.buyProductionIncrementProperty(),
+					resource.buyProducerQuantityProperty(), resource.buyProducerValueProperty());
+			
+			setNumberEndings(resource.getBuyProducerValue(), buyProducerLabelButton, buyProducerNumButton);
+		}
+		
+		private void updateBuyStorerValues(Resource resource) {
+			resource.updateQuantitiyAndValue(player, resource.getStorerCost(), false, player.buyStorageIncrementProperty(),
+					resource.buyStorerQuantityProperty(), resource.buyStorerValueProperty());
+			
+			setNumberEndings(resource.getBuyStorerValue(), buyStorerLabelButton, buyStorerNumButton);
+		}
+		
+		private void updateSellValues(Resource resource) {
+			resource.updateQuantitiyAndValue(player, resource.getMarketValue(), true, player.sellResourceIncrementProperty(),
+					resource.sellQuantityProperty(), resource.sellValueProperty());
+			
+			setNumberEndings(resource.getSellValue(), sellLabelButton, sellNumButton);
 		}
 
 		private void setNumberEndings(double cost, Button labelButton, Button numButton) {

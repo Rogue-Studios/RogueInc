@@ -17,9 +17,18 @@ public class Resource {
     private IntegerProperty producerCount;
     private int storerCount;
     private double speedModifier;
-
+    
     private int storageIncrement;
-
+	
+	private IntegerProperty buyProducerQuantity;
+	private DoubleProperty buyProducerValue;
+	
+	private IntegerProperty buyStorerQuantity;
+	private DoubleProperty buyStorerValue;
+	
+	private IntegerProperty sellQuantity;
+	private DoubleProperty sellValue;
+    
     public int getStorageIncrement() {
         return storageIncrement;
     }
@@ -50,7 +59,48 @@ public class Resource {
 
         this.storerCount = 0;
         this.speedModifier = 1;
+	
+		this.buyProducerQuantity = new SimpleIntegerProperty();
+		this.buyProducerValue = new SimpleDoubleProperty();
+	
+		this.buyStorerQuantity = new SimpleIntegerProperty();
+		this.buyStorerValue = new SimpleDoubleProperty();
+	
+		this.sellQuantity = new SimpleIntegerProperty();
+		this.sellValue = new SimpleDoubleProperty();
 
+    }
+    
+    public void updateQuantitiyAndValue(User player, double value, boolean isSelling,
+										IntegerProperty incrementProperty, IntegerProperty quantitiyProperty, DoubleProperty valueProperty) {
+		double finalValue = 0;
+		
+		if(incrementProperty.getValue() == -1) {
+			// Find max value
+   
+			if(isSelling) {
+				quantitiyProperty.setValue(getCurrentStorage());
+				finalValue = getCurrentStorage() * value;
+				
+			} else {
+				int balance = player.getBalance().getValue().intValue();
+				int valueInt = new Double(value).intValue();
+				
+				int numPossibleToBuyWithBalance = balance / valueInt;
+				finalValue = valueInt * numPossibleToBuyWithBalance;
+				
+				quantitiyProperty.setValue(numPossibleToBuyWithBalance);
+			}
+            
+        } else {
+        	// Find 1x, 10x, or 100x value
+			finalValue = value * incrementProperty.getValue();
+			
+			quantitiyProperty.setValue(incrementProperty.getValue());
+		}
+		
+		valueProperty.setValue(finalValue);
+    
     }
 
     public double updateResourceData(double timePassed, double overFlowModifier) {
@@ -83,8 +133,56 @@ public class Resource {
         }
         return overFlowMoney;
     }
-
-    public double getTotalValue() {
+	
+	public int getBuyStorerQuantity() {
+		return buyStorerQuantity.get();
+	}
+	
+	public IntegerProperty buyStorerQuantityProperty() {
+		return buyStorerQuantity;
+	}
+	
+	public void setBuyStorerQuantity(int buyStorerQuantity) {
+		this.buyStorerQuantity.set(buyStorerQuantity);
+	}
+	
+	public double getBuyStorerValue() {
+		return buyStorerValue.get();
+	}
+	
+	public DoubleProperty buyStorerValueProperty() {
+		return buyStorerValue;
+	}
+	
+	public void setBuyStorerValue(double buyStorerValue) {
+		this.buyStorerValue.set(buyStorerValue);
+	}
+	
+	public int getSellQuantity() {
+		return sellQuantity.get();
+	}
+	
+	public IntegerProperty sellQuantityProperty() {
+		return sellQuantity;
+	}
+	
+	public void setSellQuantity(int sellQuantity) {
+		this.sellQuantity.set(sellQuantity);
+	}
+	
+	public double getSellValue() {
+		return sellValue.get();
+	}
+	
+	public DoubleProperty sellValueProperty() {
+		return sellValue;
+	}
+	
+	public void setSellValue(double sellValue) {
+		this.sellValue.set(sellValue);
+	}
+	
+	public double getTotalValue() {
 
         // get the value of all items in storage
         double totalValue;
@@ -92,10 +190,32 @@ public class Resource {
         return totalValue;
 
     }
-
-
-
-    public boolean isUnlocked() {
+	
+	public int getBuyProducerQuantity() {
+		return buyProducerQuantity.get();
+	}
+	
+	public IntegerProperty buyProducerQuantityProperty() {
+		return buyProducerQuantity;
+	}
+	
+	public void setBuyProducerQuantity(int buyProducerQuantity) {
+		this.buyProducerQuantity.set(buyProducerQuantity);
+	}
+	
+	public double getBuyProducerValue() {
+		return buyProducerValue.get();
+	}
+	
+	public DoubleProperty buyProducerValueProperty() {
+		return buyProducerValue;
+	}
+	
+	public void setBuyProducerValue(double buyProducerValue) {
+		this.buyProducerValue.set(buyProducerValue);
+	}
+	
+	public boolean isUnlocked() {
         return unlocked;
     }
 
