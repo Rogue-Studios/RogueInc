@@ -19,6 +19,9 @@ public class Resource {
     private double speedModifier;
 
     private int storageIncrement;
+    private int maxProductionBuy;
+    private int maxStorageBuy;
+    private int maxSell;
 
     public int getStorageIncrement() {
         return storageIncrement;
@@ -204,4 +207,27 @@ public class Resource {
         this.setProducerCountProperty(producerCount);
     }
 
+    public int getMaxProductionBuy() {
+        return maxProductionBuy;
+    }
+
+    public int getMaxStorageBuy() {
+        return maxStorageBuy;
+    }
+
+    public int getMaxSell() {
+        return maxSell;
+    }
+
+    public void setMaxProductionBuy(int maxProductionBuy) {
+        this.maxProductionBuy = maxProductionBuy;
+    }
+
+    public void setMaxStorageBuy(int maxStorageBuy) {
+        this.maxStorageBuy = maxStorageBuy;
+    }
+
+    public void setMaxSell(int maxSell) {
+        this.maxSell = maxSell;
+    }
 }
