@@ -319,7 +319,8 @@ public class GameViewController implements Initializable {
 			super.updateItem(resource, empty);
 
 			if (resource != null) {
-				// Use vbox for cell display
+
+				// Use hbox for cell display
 				setGraphic(containerHbox);
 
                 //// UPDATE ICON & PRODUCTION VALUES
@@ -339,23 +340,39 @@ public class GameViewController implements Initializable {
                     }
 				});
 
-				// UPDATE STORAGE PROGRESSBAR AND TEXT WHEN VALUES CHANGE
-				resource.currentStorageProperty().addListener(v -> updateStorageGUI(resource));
-				resource.maxStorageProperty().addListener(v -> updateStorageGUI(resource));
+				// UPDATE STORAGE TEXT WHEN VALUES CHANGE
+				resource.currentStorageProperty().addListener(v -> {
+					storageTextButton.setText(Integer.toString(resource.getCurrentStorage()) + " / " + resource.getMaxStorage());
+				});
 
+				resource.maxStorageProperty().addListener(v -> {
+					storageTextButton.setText(Integer.toString(resource.getCurrentStorage()) + " / " + resource.getMaxStorage());
+				});
+
+
+				// SET INITIAL BUTTON MONEY VALUES
 				buyProducerNumButton.setText("$" + (int) resource.getProducerCost());
 				buyStorerNumButton.setText("$" + (int) resource.getStorerCost());
 				sellNumButton.setText("$" + (int) resource.getMarketValue());
 
 				// UPDATE BUTTON TEXT WHEN VALUES CHANGE
 				player.buyProductionIncrementProperty().addListener(v -> {
-					double cost = resource.getProducerCost() * player.buyProductionIncrementProperty().get();
+					double cost = 0;
+
+					if(player.buyProductionIncrementProperty().get() == -1) {
+						cost = player.calculateMaxCost(resource);
+
+					} else {
+						cost = resource.getProducerCost() * player.buyProductionIncrementProperty().get();
+
+					}
+
 					setNumberEndings(cost, buyProducerLabelButton, buyProducerNumButton);
 
 				});
 
                 player.buyStorageIncrementProperty().addListener(v -> {
-                    double cost = resource.getStorerCost() * player.buyStorageIncrementProperty().get();
+					double cost = resource.getStorerCost() * player.buyStorageIncrementProperty().get();
 					setNumberEndings(cost, buyStorerLabelButton, buyStorerNumButton);
 
                 });
@@ -367,6 +384,7 @@ public class GameViewController implements Initializable {
                 });
 
 				// Update values so listeners are called immediately
+
 				resource.currentStorageProperty().setValue(resource.getCurrentStorage() + 1);
 				resource.currentStorageProperty().setValue(resource.getCurrentStorage() - 1);
 
@@ -405,20 +423,6 @@ public class GameViewController implements Initializable {
 				numButton.setText("$"  + (int)cost);
 				labelButton.setText("");
 			}
-		}
-
-		private void updateStorageGUI(Resource resource) {
-
-			storageTextButton.setText(Integer.toString(resource.getCurrentStorage()) + " / " + resource.getMaxStorage());
-
-			/*
-            if (resource.getMaxStorage() != 0) { // Ensure doesn't divide by 0
-                storageProgressBar.setProgress((double) resource.getCurrentStorage() / (double) resource.getMaxStorage());
-            } else {
-                Main.outputError("Max storage = 0. Cannot divide by 0.");
-            }
-            */
-
 		}
 
 		public void setButtonActions(Resource resource) {

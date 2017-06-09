@@ -34,6 +34,44 @@ public class User {
         this.sellResourceIncrement.setValue(1);
     }
 
+    public double calculateMaxCost(Resource resource) {
+    	double cost = 0;
+
+		if(buyProductionIncrementProperty().get() == -1) {
+
+			// Find the max number that could be bought with current balance
+
+			int numPossibleToBuyWithBalance;
+
+			int balance = getBalance().getValue().intValue();
+			int itemCost = new Double(resource.getProducerCost()).intValue();
+
+			numPossibleToBuyWithBalance = balance / itemCost;
+
+			// Find the max number that could be bought with current storage
+
+			int numPossibleToBuyWithStorage = resource.getMaxStorage() - resource.getCurrentStorage();
+
+			int numPossibleOverall;
+
+			// Use whichever value is smallest when calculating cost
+
+			if(numPossibleToBuyWithStorage < numPossibleToBuyWithBalance) {
+				numPossibleOverall = numPossibleToBuyWithStorage;
+			} else {
+				numPossibleOverall = numPossibleToBuyWithBalance;
+			}
+
+			cost = resource.getProducerCost() * numPossibleOverall;
+
+		} else {
+			cost = resource.getProducerCost() * buyProductionIncrementProperty().get();
+
+		}
+
+		return cost;
+	}
+
     public void buyProducer(Resource resource) {
 		// gives more production to the user if they can afford it
 		if (isAbleToSpend(resource.getProducerCost() * buyProductionIncrementProperty().get())) {
