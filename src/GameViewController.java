@@ -360,7 +360,7 @@ public class GameViewController implements Initializable {
 					double cost = 0;
 
 					if(player.buyProductionIncrementProperty().get() == -1) {
-						cost = player.calculateMaxCost(resource);
+						cost = player.calculateMaxCost(resource, resource.getProducerCost());
 
 					} else {
 						cost = resource.getProducerCost() * player.buyProductionIncrementProperty().get();
@@ -372,13 +372,32 @@ public class GameViewController implements Initializable {
 				});
 
                 player.buyStorageIncrementProperty().addListener(v -> {
-					double cost = resource.getStorerCost() * player.buyStorageIncrementProperty().get();
+
+					double cost = 0;
+
+					if(player.buyStorageIncrementProperty().get() == -1) {
+						cost = player.calculateMaxCost(resource, resource.getStorerCost());
+
+					} else {
+						cost = resource.getStorerCost() * player.buyStorageIncrementProperty().get();
+
+					}
+
 					setNumberEndings(cost, buyStorerLabelButton, buyStorerNumButton);
 
                 });
 
                 player.sellResourceIncrementProperty().addListener(v -> {
-                    double cost = resource.getMarketValue() * player.sellResourceIncrementProperty().get();
+                    double cost = 0;
+
+					if(player.sellResourceIncrementProperty().get() == -1) {
+						cost = player.calculateMaxSell(resource, resource.getMarketValue());
+
+					} else {
+						cost = resource.getMarketValue() * player.sellResourceIncrementProperty().get();
+
+					}
+
                     setNumberEndings(cost, sellLabelButton, sellNumButton);
 
                 });

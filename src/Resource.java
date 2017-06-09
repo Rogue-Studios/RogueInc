@@ -18,11 +18,11 @@ public class Resource {
     private int storerCount;
     private double speedModifier;
 
+    private int storageIncrement;
+
     public int getStorageIncrement() {
         return storageIncrement;
     }
-
-    private int storageIncrement;
 
 
     public Resource(String name, double producerCost, double storerCost, double marketValue, double productionTime, int storageIncrement) {

@@ -34,42 +34,55 @@ public class User {
         this.sellResourceIncrement.setValue(1);
     }
 
-    public double calculateMaxCost(Resource resource) {
+    public double calculateMaxToFillStorage(Resource resource) {
     	double cost = 0;
 
-		if(buyProductionIncrementProperty().get() == -1) {
+		// Find the max number that could be bought with current balance
 
-			// Find the max number that could be bought with current balance
+		int numPossibleToBuyWithBalance;
 
-			int numPossibleToBuyWithBalance;
+		int balance = getBalance().getValue().intValue();
+		int itemCost = new Double(resource.getProducerCost()).intValue();
 
-			int balance = getBalance().getValue().intValue();
-			int itemCost = new Double(resource.getProducerCost()).intValue();
+		numPossibleToBuyWithBalance = balance / itemCost;
 
-			numPossibleToBuyWithBalance = balance / itemCost;
+		// Find the max number that could be bought with current storage
 
-			// Find the max number that could be bought with current storage
+		int numPossibleToBuyWithStorage = resource.getMaxStorage() - resource.getCurrentStorage();
 
-			int numPossibleToBuyWithStorage = resource.getMaxStorage() - resource.getCurrentStorage();
+		int numPossibleOverall;
 
-			int numPossibleOverall;
+		// Use whichever value is smallest when calculating cost
 
-			// Use whichever value is smallest when calculating cost
-
-			if(numPossibleToBuyWithStorage < numPossibleToBuyWithBalance) {
-				numPossibleOverall = numPossibleToBuyWithStorage;
-			} else {
-				numPossibleOverall = numPossibleToBuyWithBalance;
-			}
-
-			cost = resource.getProducerCost() * numPossibleOverall;
-
+		if(numPossibleToBuyWithStorage < numPossibleToBuyWithBalance) {
+			numPossibleOverall = numPossibleToBuyWithStorage;
 		} else {
-			cost = resource.getProducerCost() * buyProductionIncrementProperty().get();
-
+			numPossibleOverall = numPossibleToBuyWithBalance;
 		}
 
+		cost = resource.getProducerCost() * numPossibleOverall;
+
 		return cost;
+	}
+
+	public double calculateMaxCost(Resource resource, Double itemCost) {
+		// Find the max number that could be bought with current balance
+
+		int balance = getBalance().getValue().intValue();
+		int itemCostInt = new Double(itemCost).intValue();
+
+		int numPossibleToBuyWithBalance = balance / itemCostInt;
+
+		double cost = itemCost * numPossibleToBuyWithBalance;
+
+		return cost;
+
+	}
+
+	public double calculateMaxSell(Resource resource, Double itemValue) {
+		// Find max value gained from selling all in storage
+
+    	return resource.getCurrentStorage() * itemValue;
 	}
 
     public void buyProducer(Resource resource) {
