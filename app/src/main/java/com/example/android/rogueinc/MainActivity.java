@@ -18,27 +18,22 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    final int num = 1;
+    private ArrayList<Resource> resources = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ArrayList<Resource> resources = new ArrayList<>();
-        for(int i = 0; i < num; i++) {
-            Resource tempResource = new Resource(
-                    "lemons",
-                    1.0,
-                    10.0,
-                    5.0);
-            resources.add(tempResource);
-        }
+        resources.add(new Resource("lemons", 1.0, 10.0, 5.0));
+        resources.add(new Resource("bananas", 1.0, 10.0, 5.0));
+        resources.add(new Resource("apples", 1.0, 10.0, 5.0));
+        resources.add(new Resource("oranges", 1.0, 10.0, 5.0));
 
+        ArrayAdapter resourceAdapter = new ArrayAdapter(this, 0, resources);
         ListView resourceList = (ListView) findViewById(R.id.resourceList);
-        ResourceAdapter resourceAdapter = new ResourceAdapter(this, resources);
         resourceList.setAdapter(resourceAdapter);
+        setContentView(resourceList);
 
     }
-
 }
