@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         resources.add(new Resource("apples", 1.0, 10.0, 5.0));
         resources.add(new Resource("oranges", 1.0, 10.0, 5.0));
 
-        ArrayAdapter resourceAdapter = new ArrayAdapter(this, 0, resources);
+        ResourceAdapter resourceAdapter = new ResourceAdapter(this, 0, resources);
         ListView resourceList = (ListView) findViewById(R.id.resourceList);
         resourceList.setAdapter(resourceAdapter);
         setContentView(resourceList);
