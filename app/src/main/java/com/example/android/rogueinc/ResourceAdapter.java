@@ -32,6 +32,7 @@ public class ResourceAdapter extends ArrayAdapter {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = inflater.inflate(R.layout.resource_cell, null);
 
+
         ImageView icon = (ImageView) view.findViewById(R.id.resourceIcon);
         TextView timerText = (TextView) view.findViewById(R.id.timerText);
         TextView nameText = (TextView) view.findViewById(R.id.nameText);
@@ -42,8 +43,8 @@ public class ResourceAdapter extends ArrayAdapter {
 
         timerText.setText("00:05s");
         nameText.setText(tempResource.getName());
-        productionAmountText.setText(Double.toString(tempResource.getAmount()) + " /s");
-        productionValueText.setText(Double.toString(tempResource.getValue() * tempResource.getValueModifier()));
+        productionAmountText.setText(String.valueOf(tempResource.getAmount()) + " /s");
+        productionValueText.setText(String.valueOf(tempResource.getValue() * tempResource.getValueModifier()));
         costButton.setText("$100");
         progressBar.setProgress(50);
 
