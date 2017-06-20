@@ -41,12 +41,22 @@ public class ResourceAdapter extends ArrayAdapter {
         Button costButton = (Button) view.findViewById(R.id.costButton);
         ProgressBar progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
 
-        timerText.setText("00:05s");
+
+        if(tempResource.getTimeSinceProduction() < 10) {
+            timerText.setText("00:0" + (int) tempResource.getTimeSinceProduction() + "s");
+        }
+        else if (9 < tempResource.getTimeSinceProduction() && tempResource.getTimeSinceProduction() < 60) {
+            timerText.setText("00:" + (int) tempResource.getTimeSinceProduction() + "s");
+        }
+        else {
+            timerText.setText("oliver needs to finish this");
+        }
+
         nameText.setText(tempResource.getName());
         productionAmountText.setText(String.valueOf(tempResource.getAmount()) + " /s");
         productionValueText.setText(String.valueOf(tempResource.getValue() * tempResource.getValueModifier()));
         costButton.setText("$100");
-        progressBar.setProgress(50);
+        progressBar.setProgress((int) (tempResource.getTimeSinceProduction() / tempResource.getProductionTime() * 100));
 
         return view;
     }

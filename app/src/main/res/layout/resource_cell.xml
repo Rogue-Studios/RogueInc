@@ -10,7 +10,7 @@
     android:padding="10dp">
 
     <RelativeLayout
-        android:layout_width="100dp"
+        android:layout_width="80dp"
         android:layout_height="match_parent"
         tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="8dp">
@@ -44,7 +44,7 @@
                 style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="2" />
+                android:layout_weight="3" />
 
             <TextView
                 android:id="@+id/timerText"
@@ -80,7 +80,7 @@
                 android:id="@+id/costButton"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:text="Buy" />
 
         </LinearLayout>

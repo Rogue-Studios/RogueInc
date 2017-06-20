@@ -1,20 +1,13 @@
 package com.example.android.rogueinc;
 
-import android.content.Context;
-import android.support.constraint.ConstraintLayout;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.ScrollView;
-import android.widget.TableLayout;
-import android.widget.TextView;
-
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -33,7 +26,35 @@ public class MainActivity extends AppCompatActivity {
         ResourceAdapter resourceAdapter = new ResourceAdapter(this, 0, resources);
         ListView resourceList = (ListView) findViewById(R.id.resourceList);
         resourceList.setAdapter(resourceAdapter);
-        setContentView(resourceList);
 
+
+
+
+        /*
+        final Handler handler = new Handler();
+        Timer timer = new Timer(false);
+        TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        int x = 0;
+
+                        x += 1;
+                        resources.get(0).setName(Integer.toString(x));
+
+                    }
+                });
+            }
+        };
+        timer.schedule(timerTask, 100);
+        */
+
+        resources.get(0).setName("lemons changed");
+        resourceAdapter.notifyDataSetChanged();
+
+        resources.get(1).setTimeSinceProduction(2);
     }
 }
