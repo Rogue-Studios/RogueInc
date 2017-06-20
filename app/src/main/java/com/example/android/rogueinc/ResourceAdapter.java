@@ -30,34 +30,47 @@ public class ResourceAdapter extends ArrayAdapter {
         Resource tempResource = resources.get(position);
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.resource_cell, null);
+
+        if(tempResource.isUnlocked() == true) {
+            View view = inflater.inflate(R.layout.resource_cell, null);
 
 
-        ImageView icon = (ImageView) view.findViewById(R.id.resourceIcon);
-        TextView timerText = (TextView) view.findViewById(R.id.timerText);
-        TextView nameText = (TextView) view.findViewById(R.id.nameText);
-        TextView productionAmountText = (TextView) view.findViewById(R.id.productionAmountText);
-        TextView productionValueText = (TextView) view.findViewById(R.id.productionValueText);
-        Button costButton = (Button) view.findViewById(R.id.costButton);
-        ProgressBar progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
+            ImageView icon = (ImageView) view.findViewById(R.id.resourceIcon);
+            TextView timerText = (TextView) view.findViewById(R.id.timerText);
+            TextView nameText = (TextView) view.findViewById(R.id.nameText);
+            TextView productionAmountText = (TextView) view.findViewById(R.id.productionAmountText);
+            TextView productionValueText = (TextView) view.findViewById(R.id.productionValueText);
+            Button costButton = (Button) view.findViewById(R.id.costButton);
+            ProgressBar progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
 
+            // CALCULATES AND DISPLAYS TIME SINCE PRODUCTION
+            if(tempResource.getTimeSinceProduction() < 10) {
+                timerText.setText("00:0" + (int) tempResource.getTimeSinceProduction() + "s");
+            }
+            else if (9 < tempResource.getTimeSinceProduction() && tempResource.getTimeSinceProduction() < 60) {
+                timerText.setText("00:" + (int) tempResource.getTimeSinceProduction() + "s");
+            }
+            else {
+                timerText.setText("oliver needs to finish this");
+            }
 
-        if(tempResource.getTimeSinceProduction() < 10) {
-            timerText.setText("00:0" + (int) tempResource.getTimeSinceProduction() + "s");
-        }
-        else if (9 < tempResource.getTimeSinceProduction() && tempResource.getTimeSinceProduction() < 60) {
-            timerText.setText("00:" + (int) tempResource.getTimeSinceProduction() + "s");
+            // DISPLAYS THE NAME OF THE RESOURCE
+            nameText.setText(tempResource.getName());
+
+            // DISPLAYS THE AMOUNT PRODUCED PER SECOND
+            productionAmountText.setText(String.valueOf(tempResource.getAmount() - tempResource.getAmountUsed()) + " /s");
+            productionValueText.setText(String.valueOf(tempResource.getValue() * tempResource.getValueModifier() * tempResource.getAmount()) + "/s");
+            costButton.setText("$" + String.valueOf((int) tempResource.getCost()));
+            progressBar.setProgress((int) (tempResource.getTimeSinceProduction() / tempResource.getProductionTime() * 100));
+
+            return view;
         }
         else {
-            timerText.setText("oliver needs to finish this");
+            View view = inflater.inflate(R.layout.resource_cell_locked, null);
+
+
+            return view;
         }
 
-        nameText.setText(tempResource.getName());
-        productionAmountText.setText(String.valueOf(tempResource.getAmount()) + " /s");
-        productionValueText.setText(String.valueOf(tempResource.getValue() * tempResource.getValueModifier()));
-        costButton.setText("$100");
-        progressBar.setProgress((int) (tempResource.getTimeSinceProduction() / tempResource.getProductionTime() * 100));
-
-        return view;
     }
 }

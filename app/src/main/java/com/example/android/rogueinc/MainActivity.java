@@ -18,10 +18,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        resources.add(new Resource("lemons", 1.0, 10.0, 5.0));
-        resources.add(new Resource("bananas", 1.0, 10.0, 5.0));
-        resources.add(new Resource("apples", 1.0, 10.0, 5.0));
-        resources.add(new Resource("oranges", 1.0, 10.0, 5.0));
+        resources.add(new Resource("lemons", true, 1.0, 10.0, 5.0));
+        resources.add(new Resource("bananas", false, 1.0, 10.0, 5.0));
+        resources.add(new Resource("apples", true, 1.0, 10.0, 5.0));
+        resources.add(new Resource("oranges", false, 1.0, 10.0, 5.0));
 
         ResourceAdapter resourceAdapter = new ResourceAdapter(this, 0, resources);
         ListView resourceList = (ListView) findViewById(R.id.resourceList);

@@ -9,13 +9,14 @@ public class Resource {
     private double productionTime;
     private double timeSinceProduction;
     private int amount;
+    private int amountUsed;
     private double speedModifier;
     private double valueModifier;
 
-    public Resource(String name, double value, double cost, double productionTime) {
+    public Resource(String name, Boolean unlocked, double value, double cost, double productionTime) {
 
         this.name = name;
-        this.unlocked = false;
+        this.unlocked = unlocked;
         this.value = value;
         this.cost = cost;
         this.productionTime = productionTime;
@@ -54,6 +55,10 @@ public class Resource {
         return amount;
     }
 
+    public int getAmountUsed() {
+        return amountUsed;
+    }
+
     public double getSpeedModifier() {
         return speedModifier;
     }
@@ -88,6 +93,10 @@ public class Resource {
 
     public void setAmount(int amount) {
         this.amount = amount;
+    }
+
+    public void setAmountUsed(int amountUsed) {
+        this.amountUsed = amountUsed;
     }
 
     public void setSpeedModifier(double speedModifier) {
