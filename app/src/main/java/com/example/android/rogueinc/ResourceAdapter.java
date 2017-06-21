@@ -1,10 +1,12 @@
 package com.example.android.rogueinc;
 
+import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.LinearInterpolator;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
@@ -44,10 +46,10 @@ public class ResourceAdapter extends ArrayAdapter {
             ProgressBar progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
 
             // CALCULATES AND DISPLAYS TIME SINCE PRODUCTION
-            if(tempResource.getTimeSinceProduction() < 10) {
-                timerText.setText("00:0" + (int) tempResource.getTimeSinceProduction() + "s");
+            if(tempResource.getProductionTime() - tempResource.getTimeSinceProduction() < 10) {
+                timerText.setText("00:0" + (int) (tempResource.getProductionTime() - tempResource.getTimeSinceProduction()) + "s");
             }
-            else if (9 < tempResource.getTimeSinceProduction() && tempResource.getTimeSinceProduction() < 60) {
+            else if (9 < tempResource.getProductionTime() - tempResource.getTimeSinceProduction() && tempResource.getProductionTime() - tempResource.getTimeSinceProduction() < 60) {
                 timerText.setText("00:" + (int) tempResource.getTimeSinceProduction() + "s");
             }
             else {
@@ -61,12 +63,28 @@ public class ResourceAdapter extends ArrayAdapter {
             productionAmountText.setText(String.valueOf(tempResource.getAmount() - tempResource.getAmountUsed()) + " /s");
             productionValueText.setText(String.valueOf(tempResource.getValue() * tempResource.getValueModifier() * tempResource.getAmount()) + "/s");
             costButton.setText("$" + String.valueOf((int) tempResource.getCost()));
-            progressBar.setProgress((int) (tempResource.getTimeSinceProduction() / tempResource.getProductionTime() * 100));
+            // OLD AND INEFFICIENT progressBar.setProgress((int) (tempResource.getTimeSinceProduction() / tempResource.getProductionTime() * 100));
 
+            if(tempResource.isStarted() == false) {
+                ObjectAnimator progressBarAnimation = ObjectAnimator.ofInt(progressBar, "progress", 0, 100);
+                progressBarAnimation.setDuration((long) tempResource.getProductionTime() * 1000);
+                progressBarAnimation.setInterpolator(new LinearInterpolator());
+                progressBarAnimation.start();
+                tempResource.setStarted(true);
+            }
+            
             return view;
         }
         else {
             View view = inflater.inflate(R.layout.resource_cell_locked, null);
+
+            TextView nameLockedText = (TextView) view.findViewById(R.id.nameLockedText);
+            TextView productionText = (TextView) view.findViewById(R.id.productionText);
+            TextView valueText = (TextView) view.findViewById(R.id.valueText);
+
+            nameLockedText.setText(tempResource.getName());
+            productionText.setText(String.valueOf(((1 / tempResource.getProductionTime())) * tempResource.getSpeedModifier()) + "/s");
+            valueText.setText("$" + String.valueOf( ((1 / tempResource.getProductionTime()) * tempResource.getValue() * tempResource.getValueModifier())) + "/s");
 
 
             return view;

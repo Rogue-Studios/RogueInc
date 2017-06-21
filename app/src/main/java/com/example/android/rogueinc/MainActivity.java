@@ -9,9 +9,13 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
+
 public class MainActivity extends AppCompatActivity {
 
     private ArrayList<Resource> resources = new ArrayList<>();
+    final int updateTime = 100;
+    Player player = new Player(100.0, 0);
+    boolean running = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,38 +27,30 @@ public class MainActivity extends AppCompatActivity {
         resources.add(new Resource("apples", true, 1.0, 10.0, 5.0));
         resources.add(new Resource("oranges", false, 1.0, 10.0, 5.0));
 
-        ResourceAdapter resourceAdapter = new ResourceAdapter(this, 0, resources);
+        final ResourceAdapter resourceAdapter = new ResourceAdapter(this, 0, resources);
         ListView resourceList = (ListView) findViewById(R.id.resourceList);
         resourceList.setAdapter(resourceAdapter);
 
 
 
 
-        /*
-        final Handler handler = new Handler();
-        Timer timer = new Timer(false);
-        TimerTask timerTask = new TimerTask() {
+        Timer timer = new Timer();
+        timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
+                for(int i = 0; i < resources.size(); i++) {
+                    // UPDATES EACH RESOURCE
+                    player.addBalance(resources.get(i).update(updateTime));
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            // UPDATES THE UI
+                            resourceAdapter.notifyDataSetChanged();
+                        }
 
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        int x = 0;
-
-                        x += 1;
-                        resources.get(0).setName(Integer.toString(x));
-
-                    }
-                });
+                    });
+                }
             }
-        };
-        timer.schedule(timerTask, 100);
-        */
-
-        resources.get(0).setName("lemons changed");
-        resourceAdapter.notifyDataSetChanged();
-
-        resources.get(1).setTimeSinceProduction(2);
+        }, updateTime, updateTime);
     }
 }

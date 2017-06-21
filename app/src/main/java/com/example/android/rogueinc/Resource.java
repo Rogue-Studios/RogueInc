@@ -10,8 +10,10 @@ public class Resource {
     private double timeSinceProduction;
     private int amount;
     private int amountUsed;
+    private int amountProduced;
     private double speedModifier;
     private double valueModifier;
+    private boolean started;
 
     public Resource(String name, Boolean unlocked, double value, double cost, double productionTime) {
 
@@ -24,7 +26,21 @@ public class Resource {
         this.amount = 0;
         this.speedModifier = 1.0;
         this.valueModifier = 1.0;
+        this.started = false;
+    }
 
+    public double update(double time) {
+        timeSinceProduction += ((time / 1000) * speedModifier);
+        if ((timeSinceProduction / productionTime) > 1) {
+            started = false;
+            int timesProduced = (int) Math.floor(timeSinceProduction / productionTime);
+            timeSinceProduction = timeSinceProduction % productionTime;
+            amountProduced += timesProduced;
+            return (timesProduced * value * valueModifier);
+        }
+        else {
+            return 0;
+        }
     }
 
     public String getName() {
@@ -107,4 +123,11 @@ public class Resource {
         this.valueModifier = valueModifier;
     }
 
+    public boolean isStarted() {
+        return started;
+    }
+
+    public void setStarted(boolean started) {
+        this.started = started;
+    }
 }
